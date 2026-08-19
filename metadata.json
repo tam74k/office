@@ -1,0 +1,6 @@
+{
+  "name": "إدارة مكاتب استقدام العمالة",
+  "description": "منظومة متكاملة لإدارة مكاتب استقدام العمالة المهنية والمنزلية والعملاء والطلبات والمدن والدول ورسائل الواتساب والربط مع Supabase والطباعة الفورية.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
