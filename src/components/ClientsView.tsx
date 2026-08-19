@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { Client, Order, Country, City, Profession, OfficeProfile, WhatsAppTemplate } from '../types';
 import { matchesFlexibleArabic, formatCurrency, formatDate, openWhatsApp, buildWhatsAppMessage } from '../utils/helpers';
+import { CountryAutocomplete, ProfessionAutocomplete } from './FormAutocomplete';
 
 interface ClientsViewProps {
   clients: Client[];
@@ -326,35 +327,32 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
           </div>
 
           {/* Country Filter */}
-          <div>
+          <div className="w-48 relative">
             <label className="block text-[11px] font-bold text-slate-600 mb-1">دولة الكفيل:</label>
-            <select
-              id="clients-country-filter"
-              value={selectedCountryFilter}
-              onChange={(e) => setSelectedCountryFilter(e.target.value)}
-              className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 bg-slate-50"
-            >
-              <option value="الكل">جميع دول الكفلاء</option>
-              {sponsorCountries.map(c => (
-                <option key={c.id} value={c.name}>{c.flag_emoji} {c.name}</option>
-              ))}
-            </select>
+            <div className="relative">
+              <CountryAutocomplete
+                countries={sponsorCountries}
+                selectedId={selectedCountryFilter === 'الكل' ? '' : (sponsorCountries.find(c => c.name === selectedCountryFilter)?.id || '')}
+                onChange={(c) => setSelectedCountryFilter(c ? c.name : 'الكل')}
+                placeholder="جميع دول الكفلاء"
+                allowAll={true}
+                onlyWorkerCountries={false}
+              />
+            </div>
           </div>
 
           {/* Profession Filter */}
-          <div>
+          <div className="w-56 relative">
             <label className="block text-[11px] font-bold text-slate-600 mb-1">المهن المطلوبة لطلبات العميل:</label>
-            <select
-              id="clients-prof-filter"
-              value={selectedProfessionFilter}
-              onChange={(e) => setSelectedProfessionFilter(e.target.value)}
-              className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 bg-slate-50"
-            >
-              <option value="الكل">جميع المهن</option>
-              {professions.map(p => (
-                <option key={p.id} value={p.name}>{p.name}</option>
-              ))}
-            </select>
+            <div className="relative">
+              <ProfessionAutocomplete
+                professions={professions}
+                selectedId={selectedProfessionFilter === 'الكل' ? '' : (professions.find(p => p.name === selectedProfessionFilter)?.id || '')}
+                onChange={(p) => setSelectedProfessionFilter(p ? p.name : 'الكل')}
+                placeholder="جميع المهن"
+                allowAll={true}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -633,19 +631,15 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
                 <label className="block text-[11px] font-bold text-slate-700 mb-1">
                   دولة العميل (تظهر دول الكفلاء فقط):
                 </label>
-                <select
-                  value={formData.country_id || ''}
-                  onChange={(e) => handleCountryChangeInForm(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white font-semibold"
-                  required
-                >
-                  <option value="">اختر الدولة...</option>
-                  {sponsorCountries.map(sc => (
-                    <option key={sc.id} value={sc.id}>
-                      {sc.flag_emoji} {sc.name} ({sc.phone_code})
-                    </option>
-                  ))}
-                </select>
+                <div className="relative">
+                  <CountryAutocomplete
+                    countries={sponsorCountries}
+                    selectedId={formData.country_id || ''}
+                    onlyWorkerCountries={false}
+                    onChange={(c) => handleCountryChangeInForm(c.id)}
+                    placeholder="ابحث عن دولة..."
+                  />
+                </div>
                 <p className="text-[10px] text-slate-500 mt-1">
                   * عند اختيار الدولة يتم تحديث كود الاتصال الدولي وتصفية قائمة المدن تلقائياً.
                 </p>

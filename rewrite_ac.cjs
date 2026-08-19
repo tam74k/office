@@ -1,4 +1,6 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+const fs = require('fs');
+
+const code = `import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { Search, ChevronDown, Check, Briefcase, Globe } from 'lucide-react';
 import { Profession, Country, Client } from '../types';
 import { matchesFlexibleArabic } from '../utils/helpers';
@@ -89,7 +91,7 @@ export const ProfessionAutocomplete: React.FC<ProfessionAutocompleteProps> = ({
           onClick={() => setIsOpen(!isOpen)}
           className="absolute left-2 top-2 p-0.5 text-slate-400 hover:text-slate-600 rounded transition-colors cursor-pointer"
         >
-          <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isOpen ? 'rotate-180 text-emerald-600' : ''}`} />
+          <ChevronDown className={\`w-3.5 h-3.5 transition-transform \${isOpen ? 'rotate-180 text-emerald-600' : ''}\`} />
         </button>
       </div>
 
@@ -99,9 +101,9 @@ export const ProfessionAutocomplete: React.FC<ProfessionAutocompleteProps> = ({
             <button
               type="button"
               onClick={() => handleSelect(null)}
-              className={`w-full text-right px-3 py-2 flex items-center justify-between text-xs transition-colors cursor-pointer ${
+              className={\`w-full text-right px-3 py-2 flex items-center justify-between text-xs transition-colors cursor-pointer \${
                 (!selectedId || selectedId === 'الكل') ? 'bg-emerald-50 text-emerald-900 font-bold' : 'hover:bg-slate-50 text-slate-700'
-              }`}
+              }\`}
             >
               <div className="font-bold">جميع المهن</div>
               {(!selectedId || selectedId === 'الكل') && <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />}
@@ -115,15 +117,15 @@ export const ProfessionAutocomplete: React.FC<ProfessionAutocompleteProps> = ({
                   key={p.id}
                   type="button"
                   onClick={() => handleSelect(p)}
-                  className={`w-full text-right px-3 py-2 flex items-center justify-between text-xs transition-colors cursor-pointer ${
+                  className={\`w-full text-right px-3 py-2 flex items-center justify-between text-xs transition-colors cursor-pointer \${
                     isSelected ? 'bg-emerald-50 text-emerald-900 font-bold' : 'hover:bg-slate-50 text-slate-700'
-                  }`}
+                  }\`}
                 >
                   <div className="flex items-center gap-2">
                     <span className="font-bold">{p.name}</span>
-                    <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${
+                    <span className={\`text-[10px] px-1.5 py-0.5 rounded-full font-medium \${
                       p.category === 'منزلية' ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800'
-                    }`}>
+                    }\`}>
                       {p.category}
                     </span>
                   </div>
@@ -182,7 +184,7 @@ export const CountryAutocomplete: React.FC<CountryAutocompleteProps> = ({
 
   useEffect(() => {
     if (selectedCountry) {
-      setQuery(`${selectedCountry.flag_emoji || ''} ${selectedCountry.name}`.trim());
+      setQuery(\`\${selectedCountry.flag_emoji || ''} \${selectedCountry.name}\`.trim());
     } else {
       setQuery(allowAll && (!selectedId || selectedId === 'الكل') ? 'الكل' : '');
     }
@@ -193,7 +195,7 @@ export const CountryAutocomplete: React.FC<CountryAutocompleteProps> = ({
       if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
         setIsOpen(false);
         if (selectedCountry) {
-          setQuery(`${selectedCountry.flag_emoji || ''} ${selectedCountry.name}`.trim());
+          setQuery(\`\${selectedCountry.flag_emoji || ''} \${selectedCountry.name}\`.trim());
         } else {
           setQuery(allowAll && (!selectedId || selectedId === 'الكل') ? 'الكل' : '');
         }
@@ -205,7 +207,7 @@ export const CountryAutocomplete: React.FC<CountryAutocompleteProps> = ({
 
   const filteredCountries = useMemo(() => {
     let result = availableCountries;
-    if (query.trim() && !(selectedCountry && query.trim() === `${selectedCountry.flag_emoji || ''} ${selectedCountry.name}`.trim()) && query.trim() !== 'الكل') {
+    if (query.trim() && !(selectedCountry && query.trim() === \`\${selectedCountry.flag_emoji || ''} \${selectedCountry.name}\`.trim()) && query.trim() !== 'الكل') {
       result = availableCountries.filter(c => 
         matchesFlexibleArabic(c.name, query) ||
         c.code.toLowerCase().includes(query.toLowerCase()) ||
@@ -217,7 +219,7 @@ export const CountryAutocomplete: React.FC<CountryAutocompleteProps> = ({
 
   const handleSelect = (country: Country | null) => {
     onChange(country);
-    setQuery(country ? `${country.flag_emoji || ''} ${country.name}`.trim() : 'الكل');
+    setQuery(country ? \`\${country.flag_emoji || ''} \${country.name}\`.trim() : 'الكل');
     setIsOpen(false);
   };
 
@@ -243,7 +245,7 @@ export const CountryAutocomplete: React.FC<CountryAutocompleteProps> = ({
           onClick={() => setIsOpen(!isOpen)}
           className="absolute left-2 top-2 p-0.5 text-slate-400 hover:text-slate-600 rounded transition-colors cursor-pointer"
         >
-          <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isOpen ? 'rotate-180 text-emerald-600' : ''}`} />
+          <ChevronDown className={\`w-3.5 h-3.5 transition-transform \${isOpen ? 'rotate-180 text-emerald-600' : ''}\`} />
         </button>
       </div>
 
@@ -253,9 +255,9 @@ export const CountryAutocomplete: React.FC<CountryAutocompleteProps> = ({
             <button
               type="button"
               onClick={() => handleSelect(null)}
-              className={`w-full text-right px-3 py-2 flex items-center justify-between text-xs transition-colors cursor-pointer ${
+              className={\`w-full text-right px-3 py-2 flex items-center justify-between text-xs transition-colors cursor-pointer \${
                 (!selectedId || selectedId === 'الكل') ? 'bg-emerald-50 text-emerald-900 font-bold' : 'hover:bg-slate-50 text-slate-700'
-              }`}
+              }\`}
             >
               <div className="font-bold">جميع الدول</div>
               {(!selectedId || selectedId === 'الكل') && <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />}
@@ -269,9 +271,9 @@ export const CountryAutocomplete: React.FC<CountryAutocompleteProps> = ({
                   key={c.id}
                   type="button"
                   onClick={() => handleSelect(c)}
-                  className={`w-full text-right px-3 py-2 flex items-center justify-between text-xs transition-colors cursor-pointer ${
+                  className={\`w-full text-right px-3 py-2 flex items-center justify-between text-xs transition-colors cursor-pointer \${
                     isSelected ? 'bg-emerald-50 text-emerald-900 font-bold' : 'hover:bg-slate-50 text-slate-700'
-                  }`}
+                  }\`}
                 >
                   <div className="flex items-center gap-2">
                     <span className="text-base leading-none">{c.flag_emoji}</span>
@@ -385,7 +387,7 @@ export const ClientAutocomplete: React.FC<ClientAutocompleteProps> = ({
           onClick={() => setIsOpen(!isOpen)}
           className="absolute left-2 top-2 p-0.5 text-slate-400 hover:text-slate-600 rounded transition-colors cursor-pointer"
         >
-          <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isOpen ? 'rotate-180 text-emerald-600' : ''}`} />
+          <ChevronDown className={\`w-3.5 h-3.5 transition-transform \${isOpen ? 'rotate-180 text-emerald-600' : ''}\`} />
         </button>
       </div>
 
@@ -395,9 +397,9 @@ export const ClientAutocomplete: React.FC<ClientAutocompleteProps> = ({
             <button
               type="button"
               onClick={() => handleSelect(null)}
-              className={`w-full text-right px-3 py-2 flex items-center justify-between text-xs transition-colors cursor-pointer ${
+              className={\`w-full text-right px-3 py-2 flex items-center justify-between text-xs transition-colors cursor-pointer \${
                 (!selectedId || selectedId === 'الكل') ? 'bg-emerald-50 text-emerald-900 font-bold' : 'hover:bg-slate-50 text-slate-700'
-              }`}
+              }\`}
             >
               <div className="font-bold">الكل</div>
               {(!selectedId || selectedId === 'الكل') && <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />}
@@ -411,9 +413,9 @@ export const ClientAutocomplete: React.FC<ClientAutocompleteProps> = ({
                   key={c.id}
                   type="button"
                   onClick={() => handleSelect(c)}
-                  className={`w-full text-right px-3 py-2 flex items-center justify-between text-xs transition-colors cursor-pointer ${
+                  className={\`w-full text-right px-3 py-2 flex items-center justify-between text-xs transition-colors cursor-pointer \${
                     isSelected ? 'bg-emerald-50 text-emerald-900 font-bold' : 'hover:bg-slate-50 text-slate-700'
-                  }`}
+                  }\`}
                 >
                   <div className="flex flex-col gap-0.5">
                     <span className="font-bold">{c.name}</span>
@@ -433,3 +435,5 @@ export const ClientAutocomplete: React.FC<ClientAutocompleteProps> = ({
     </div>
   );
 };
+`
+fs.writeFileSync('src/components/FormAutocomplete.tsx', code);

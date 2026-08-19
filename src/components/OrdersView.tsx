@@ -26,7 +26,7 @@ import {
 } from 'lucide-react';
 import { Order, OrderItem, Client, Country, Profession, OrderStatus, OfficeProfile, WhatsAppTemplate } from '../types';
 import { formatCurrency, formatDate, openWhatsApp, buildWhatsAppMessage, matchesFlexibleArabic } from '../utils/helpers';
-import { ProfessionAutocomplete, CountryAutocomplete } from './FormAutocomplete';
+import { ProfessionAutocomplete, CountryAutocomplete, ClientAutocomplete } from './FormAutocomplete';
 
 interface OrdersViewProps {
   orders: Order[];
@@ -102,8 +102,6 @@ export const OrdersView: React.FC<OrdersViewProps> = ({
   });
 
   // Client search within form autocomplete
-  const [clientSearchQuery, setClientSearchQuery] = useState('');
-  const [showClientDropdown, setShowClientDropdown] = useState(false);
 
   // Detail Item under edit in form
   const [currentItem, setCurrentItem] = useState<Partial<OrderItem>>({
@@ -113,9 +111,9 @@ export const OrdersView: React.FC<OrdersViewProps> = ({
     worker_country_name: '',
     age_min: undefined,
     age_max: undefined,
-    gender: '',
-    religion: '',
-    experience_type: '',
+    gender: 'غير محدد',
+    religion: 'لا يشترط',
+    experience_type: 'جديد (بدون خبرة)',
     experience_years: undefined,
     salary: undefined,
     currency: officeProfile.default_currency || 'SAR',
@@ -146,9 +144,9 @@ export const OrdersView: React.FC<OrdersViewProps> = ({
         worker_country_name: '',
         age_min: undefined,
         age_max: undefined,
-        gender: '',
-        religion: '',
-        experience_type: '',
+        gender: 'غير محدد',
+        religion: 'لا يشترط',
+        experience_type: 'جديد (بدون خبرة)',
         experience_years: undefined,
         salary: undefined,
         currency: 'SAR',
@@ -177,14 +175,14 @@ export const OrdersView: React.FC<OrdersViewProps> = ({
       items: defaultItems
     });
 
-    setClientSearchQuery(client ? client.name : '');
+    
     setEditingOrder(null);
     setIsFormOpen(true);
   };
 
   const openEditOrderModal = (order: Order) => {
     setFormData({ ...order });
-    setClientSearchQuery(order.client_name);
+    
     setEditingOrder(order);
     setIsFormOpen(true);
   };
@@ -199,8 +197,8 @@ export const OrdersView: React.FC<OrdersViewProps> = ({
       sponsor_country_name: client.country_name || '',
       city_name: client.city_name || ''
     }));
-    setClientSearchQuery(client.name);
-    setShowClientDropdown(false);
+    
+    
   };
 
   // Add detail item to order form
@@ -252,9 +250,9 @@ export const OrdersView: React.FC<OrdersViewProps> = ({
       worker_country_name: '',
       age_min: undefined,
       age_max: undefined,
-      gender: '',
-      religion: '',
-      experience_type: '',
+      gender: 'غير محدد',
+      religion: 'لا يشترط',
+      experience_type: 'جديد (بدون خبرة)',
       experience_years: undefined,
       salary: undefined,
       currency: officeProfile.default_currency || 'SAR',
@@ -848,37 +846,13 @@ export const OrdersView: React.FC<OrdersViewProps> = ({
                       اختيار العميل (بحث بالاسم أو الجوال):
                     </label>
                     <div className="relative">
-                      <input
-                        type="text"
-                        value={clientSearchQuery}
-                        onChange={(e) => {
-                          setClientSearchQuery(e.target.value);
-                          setShowClientDropdown(true);
-                        }}
-                        onFocus={() => setShowClientDropdown(true)}
+                      <ClientAutocomplete
+                        clients={clients.filter(c => !c.is_archived)}
+                        selectedId={formData.client_id || ''}
+                        onChange={handleSelectClientInForm}
                         placeholder="اكتب اسم العميل أو رقمه..."
-                        className="w-full pl-3 pr-8 py-2 rounded-xl border border-slate-300 bg-white"
                       />
-                      <Search className="w-3.5 h-3.5 absolute right-2.5 top-2.5 text-slate-400" />
                     </div>
-
-                    {showClientDropdown && (
-                      <div className="absolute top-full right-0 left-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-xl z-30 max-h-48 overflow-y-auto">
-                        {clients
-                          .filter(c => !c.is_archived && (matchesFlexibleArabic(c.name, clientSearchQuery) || c.mobile.includes(clientSearchQuery)))
-                          .map(client => (
-                            <button
-                              key={client.id}
-                              type="button"
-                              onClick={() => handleSelectClientInForm(client)}
-                              className="w-full text-right px-3 py-2 hover:bg-emerald-50 border-b border-slate-100 flex items-center justify-between"
-                            >
-                              <span className="font-bold text-slate-900">{client.name}</span>
-                              <span className="font-mono text-slate-500 text-[11px]">{client.full_mobile || client.mobile}</span>
-                            </button>
-                          ))}
-                      </div>
-                    )}
                   </div>
 
                   {/* Order Number & Contract Date */}

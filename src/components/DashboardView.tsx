@@ -40,6 +40,7 @@ import {
 import { Client, Order, OrderItem, Country, Profession, OrderStatus, OfficeProfile, WhatsAppTemplate } from '../types';
 import { matchesFlexibleArabic, formatCurrency, formatDate, openWhatsApp, buildWhatsAppMessage } from '../utils/helpers';
 import { OrdersView } from './OrdersView';
+import { ClientAutocomplete, CountryAutocomplete, ProfessionAutocomplete } from './FormAutocomplete';
 
 export interface DashboardViewProps {
   clients: Client[];
@@ -142,10 +143,10 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
   };
 
   // Advanced Multi-Filter States with Autocomplete
-  const [clientQuery, setClientQuery] = useState('');
-  const [mobileQuery, setMobileQuery] = useState('');
-  const [countryQuery, setCountryQuery] = useState('');
-  const [professionQuery, setProfessionQuery] = useState('');
+  const [selectedClientId, setSelectedClientId] = useState('');
+  const [mobileQuery, setMobileQuery] = useState(''); // Kept just in case it's used elsewhere
+  const [selectedWorkerCountryId, setSelectedWorkerCountryId] = useState('');
+  const [selectedProfessionId, setSelectedProfessionId] = useState('');
   const [selectedStatus, setSelectedStatus] = useState<string>('الكل');
   const [selectedSponsorCountry, setSelectedSponsorCountry] = useState<string>('الكل');
   const [selectedCountryForModal, setSelectedCountryForModal] = useState<string | null>(null);
@@ -190,54 +191,19 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
   }, [countries]);
 
   // Autocomplete data lists
-  const clientNameSuggestions = useMemo(() => {
-    if (!clientQuery) return [];
-    const set = new Set<string>();
-    clients.forEach(c => {
-      if (matchesFlexibleArabic(c.name, clientQuery)) set.add(c.name);
-    });
-    orders.forEach(o => {
-      if (matchesFlexibleArabic(o.client_name, clientQuery)) set.add(o.client_name);
-    });
-    return Array.from(set).slice(0, 6);
-  }, [clients, orders, clientQuery]);
+  
 
-  const professionSuggestions = useMemo(() => {
-    if (!professionQuery) return [];
-    const set = new Set<string>();
-    professions.forEach(p => {
-      if (matchesFlexibleArabic(p.name, professionQuery)) set.add(p.name);
-    });
-    orders.forEach(o => {
-      o.items.forEach(item => {
-        if (matchesFlexibleArabic(item.profession_name, professionQuery)) set.add(item.profession_name);
-      });
-    });
-    return Array.from(set).slice(0, 6);
-  }, [professions, orders, professionQuery]);
+  
 
-  const workerCountrySuggestions = useMemo(() => {
-    if (!countryQuery) return [];
-    const set = new Set<string>();
-    countries.filter(c => !c.is_sponsor_country).forEach(c => {
-      if (matchesFlexibleArabic(c.name, countryQuery)) set.add(c.name);
-    });
-    orders.forEach(o => {
-      o.items.forEach(item => {
-        if (matchesFlexibleArabic(item.worker_country_name, countryQuery)) set.add(item.worker_country_name);
-      });
-    });
-    return Array.from(set).slice(0, 6);
-  }, [countries, orders, countryQuery]);
+  
 
   // Filtered Orders logic applying all simultaneous filters with flexible Arabic matching & item status matching
   const filteredOrders = useMemo(() => {
     return orders.filter(order => {
       // Client Name filter
-      if (clientQuery && !matchesFlexibleArabic(order.client_name, clientQuery)) {
+      if (selectedClientId && order.client_id !== selectedClientId) {
         return false;
       }
-      // Mobile filter
       if (mobileQuery) {
         const cleanQuery = mobileQuery.replace(/[^0-9]/g, '');
         const cleanOrderMobile = order.client_mobile.replace(/[^0-9]/g, '');
@@ -268,23 +234,19 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
         if (orderDate > end) return false;
       }
       // Worker Country filter (checks across all order detail items)
-      if (countryQuery) {
-        const hasMatchingCountry = order.items.some(item => 
-          matchesFlexibleArabic(item.worker_country_name, countryQuery)
-        );
+      if (selectedWorkerCountryId) {
+        const hasMatchingCountry = order.items.some(item => item.worker_country_id === selectedWorkerCountryId);
         if (!hasMatchingCountry) return false;
       }
       // Profession filter (checks across all order detail items)
-      if (professionQuery) {
-        const hasMatchingProfession = order.items.some(item => 
-          matchesFlexibleArabic(item.profession_name, professionQuery)
-        );
+      if (selectedProfessionId) {
+        const hasMatchingProfession = order.items.some(item => item.profession_id === selectedProfessionId);
         if (!hasMatchingProfession) return false;
       }
 
       return true;
     });
-  }, [orders, clientQuery, mobileQuery, selectedSponsorCountry, selectedStatus, startDate, endDate, countryQuery, professionQuery]);
+  }, [orders, selectedClientId, mobileQuery, selectedSponsorCountry, selectedStatus, startDate, endDate, selectedWorkerCountryId, selectedProfessionId]);
 
   // Chart 1: Orders by Month
   const monthlyData = useMemo(() => {
@@ -351,10 +313,10 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
   }, [orders]);
 
   const handleResetFilters = () => {
-    setClientQuery('');
-    setMobileQuery('');
-    setCountryQuery('');
-    setProfessionQuery('');
+    setSelectedClientId('');
+              setMobileQuery('');
+              setSelectedWorkerCountryId('');
+              setSelectedProfessionId('');
     setSelectedStatus('الكل');
     setSelectedSponsorCountry('الكل');
     setStartDate('');
@@ -591,166 +553,14 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
           {/* 1. Client Name with Autocomplete */}
           <div className="relative">
-            <label className="block text-[11px] font-bold text-slate-600 mb-1">اسم العميل (بحث مرن):</label>
+            <label className="block text-[11px] font-bold text-slate-600 mb-1">العميل:</label>
             <div className="relative">
-              <input
-                id="filter-client-name"
-                type="text"
-                value={clientQuery}
-                onChange={(e) => {
-                  setClientQuery(e.target.value);
-                  setShowClientSuggestions(true);
-                }}
-                onFocus={() => setShowClientSuggestions(true)}
-                placeholder="مثال: القحطاني..."
-                className="w-full pl-3 pr-8 py-2 text-xs rounded-xl border border-slate-300 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-hidden bg-slate-50"
-              />
-              <Search className="w-3.5 h-3.5 absolute right-2.5 top-2.5 text-slate-400" />
-            </div>
-
-            {/* Suggestions list */}
-            {showClientSuggestions && clientNameSuggestions.length > 0 && (
-              <div className="absolute top-full right-0 left-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-lg z-30 overflow-hidden text-xs">
-                {clientNameSuggestions.map((name, i) => (
-                  <button
-                    key={i}
-                    onClick={() => {
-                      setClientQuery(name);
-                      setShowClientSuggestions(false);
-                    }}
-                    className="w-full text-right px-3 py-2 hover:bg-emerald-50 text-slate-800 transition-colors"
-                  >
-                    {name}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* 2. Mobile Phone */}
-          <div>
-            <label className="block text-[11px] font-bold text-slate-600 mb-1">رقم الجوال:</label>
-            <input
-              id="filter-mobile"
-              type="text"
-              value={mobileQuery}
-              onChange={(e) => setMobileQuery(e.target.value)}
-              placeholder="مثال: 50123..."
-              className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-hidden bg-slate-50 font-mono dir-ltr text-right"
-            />
-          </div>
-
-          {/* 3. Worker Country (دولة الطلب / العامل) with Autocomplete */}
-          <div className="relative">
-            <label className="block text-[11px] font-bold text-slate-600 mb-1">دولة العامل (الاستقدام):</label>
-            <div className="relative">
-              <input
-                id="filter-worker-country"
-                type="text"
-                value={countryQuery}
-                onChange={(e) => {
-                  setCountryQuery(e.target.value);
-                  setShowCountrySuggestions(true);
-                }}
-                onFocus={() => setShowCountrySuggestions(true)}
-                placeholder="مثال: الهند، الفلبين..."
-                className="w-full pl-3 pr-8 py-2 text-xs rounded-xl border border-slate-300 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-hidden bg-slate-50"
-              />
-              <Globe2 className="w-3.5 h-3.5 absolute right-2.5 top-2.5 text-slate-400" />
-            </div>
-
-            {showCountrySuggestions && workerCountrySuggestions.length > 0 && (
-              <div className="absolute top-full right-0 left-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-lg z-30 overflow-hidden text-xs">
-                {workerCountrySuggestions.map((cName, i) => (
-                  <button
-                    key={i}
-                    onClick={() => {
-                      setCountryQuery(cName);
-                      setShowCountrySuggestions(false);
-                    }}
-                    className="w-full text-right px-3 py-2 hover:bg-emerald-50 text-slate-800 transition-colors"
-                  >
-                    {cName}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* 4. Profession with Autocomplete (مثال: سباك، سائق، طباخ) */}
-          <div className="relative">
-            <label className="block text-[11px] font-bold text-slate-600 mb-1">المهنة المطلوبة (بحث جزئي):</label>
-            <div className="relative">
-              <input
-                id="filter-profession"
-                type="text"
-                value={professionQuery}
-                onChange={(e) => {
-                  setProfessionQuery(e.target.value);
-                  setShowProfessionSuggestions(true);
-                }}
-                onFocus={() => setShowProfessionSuggestions(true)}
-                placeholder="مثال: سباك، سائق..."
-                className="w-full pl-3 pr-8 py-2 text-xs rounded-xl border border-slate-300 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-hidden bg-slate-50"
-              />
-              <Briefcase className="w-3.5 h-3.5 absolute right-2.5 top-2.5 text-slate-400" />
-            </div>
-
-            {showProfessionSuggestions && professionSuggestions.length > 0 && (
-              <div className="absolute top-full right-0 left-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-lg z-30 overflow-hidden text-xs">
-                {professionSuggestions.map((pName, i) => (
-                  <button
-                    key={i}
-                    onClick={() => {
-                      setProfessionQuery(pName);
-                      setShowProfessionSuggestions(false);
-                    }}
-                    className="w-full text-right px-3 py-2 hover:bg-emerald-50 text-slate-800 transition-colors"
-                  >
-                    {pName}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* 5. Order Status */}
-          <div>
-            <label className="block text-[11px] font-bold text-slate-600 mb-1">حالة الطلب:</label>
-            <select
-              id="filter-status-select"
-              value={selectedStatus}
-              onChange={(e) => setSelectedStatus(e.target.value)}
-              className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-hidden bg-slate-50 font-medium"
-            >
-              <option value="الكل">جميع الحالات</option>
-              <option value="جديد">جديد</option>
-              <option value="تم الاختيار">تم الاختيار</option>
-              <option value="كشف طبي">كشف طبي</option>
-              <option value="تم التفييز">تم التفييز</option>
-              <option value="تم السفر">تم السفر</option>
-            </select>
-          </div>
-
-          {/* 6. Date Range (From & To) */}
-          <div>
-            <label className="block text-[11px] font-bold text-slate-600 mb-1">بين تاريخين:</label>
-            <div className="grid grid-cols-2 gap-1">
-              <input
-                id="filter-start-date"
-                type="date"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                className="w-full px-1.5 py-2 text-[10px] rounded-lg border border-slate-300 bg-slate-50"
-                title="من تاريخ"
-              />
-              <input
-                id="filter-end-date"
-                type="date"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                className="w-full px-1.5 py-2 text-[10px] rounded-lg border border-slate-300 bg-slate-50"
-                title="إلى تاريخ"
+              <ClientAutocomplete
+                clients={clients.filter(c => !c.is_archived)}
+                selectedId={selectedClientId}
+                onChange={(c) => setSelectedClientId(c ? c.id : '')}
+                allowAll={true}
+                placeholder="الكل..."
               />
             </div>
           </div>
@@ -761,7 +571,7 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
           <span>
             نتائج البحث المطابقة: <strong className="text-emerald-700 font-bold">{filteredOrders.length}</strong> من أصل {orders.length} طلب
           </span>
-          {(clientQuery || mobileQuery || countryQuery || professionQuery || selectedStatus !== 'الكل' || selectedSponsorCountry !== 'الكل' || startDate || endDate) && (
+          {(selectedClientId || mobileQuery || selectedWorkerCountryId || selectedProfessionId || selectedStatus !== 'الكل' || selectedSponsorCountry !== 'الكل' || startDate || endDate) && (
             <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md font-medium text-[11px]">
               الفلاتر نشطة ومطبقة الآن
             </span>

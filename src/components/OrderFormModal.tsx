@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { Order, OrderItem, Client, Country, Profession, OrderStatus, OfficeProfile } from '../types';
 import { formatCurrency } from '../utils/helpers';
-import { ProfessionAutocomplete, CountryAutocomplete } from './FormAutocomplete';
+import { ProfessionAutocomplete, CountryAutocomplete, ClientAutocomplete } from './FormAutocomplete';
 
 interface OrderFormModalProps {
   isOpen: boolean;
@@ -68,15 +68,13 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
     items: []
   });
 
-  const [clientSearchQuery, setClientSearchQuery] = useState('');
-  const [showClientDropdown, setShowClientDropdown] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   // Initialize or reset form
   useEffect(() => {
     if (orderToEdit) {
       setFormData({ ...orderToEdit });
-      setClientSearchQuery(orderToEdit.client_name || '');
+      
     } else {
       const targetClient = preselectedClient || null;
       const generatedOrderNo = `ORD-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
@@ -90,9 +88,9 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
         worker_country_name: '',
         age_min: undefined,
         age_max: undefined,
-        gender: '',
-        religion: '',
-        experience_type: '',
+        gender: 'غير محدد',
+        religion: 'لا يشترط',
+        experience_type: 'جديد (بدون خبرة)',
         experience_years: undefined,
         salary: undefined,
         currency: 'SAR',
@@ -121,7 +119,7 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
         items: [initialItem],
         created_at: new Date().toISOString()
       });
-      setClientSearchQuery(targetClient?.name || '');
+      
     }
     setErrors({});
   }, [orderToEdit, preselectedClient, isOpen, clients, professions, workerCountries]);
@@ -164,8 +162,8 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
       sponsor_country_name: client.country_name || '',
       city_name: client.city_name || ''
     }));
-    setClientSearchQuery(client.name);
-    setShowClientDropdown(false);
+    
+    
     setErrors(prev => ({ ...prev, client_id: '' }));
   };
 
@@ -180,9 +178,9 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
       worker_country_name: '',
       age_min: undefined,
       age_max: undefined,
-      gender: '',
-      religion: '',
-      experience_type: '',
+      gender: 'غير محدد',
+      religion: 'لا يشترط',
+      experience_type: 'جديد (بدون خبرة)',
       experience_years: undefined,
       salary: undefined,
       currency: 'SAR',
@@ -249,14 +247,7 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
     }));
   };
 
-  const filteredClients = useMemo(() => {
-    if (!clientSearchQuery) return clients;
-    return clients.filter(c => 
-      c.name.toLowerCase().includes(clientSearchQuery.toLowerCase()) ||
-      c.national_id.includes(clientSearchQuery) ||
-      c.mobile.includes(clientSearchQuery)
-    );
-  }, [clients, clientSearchQuery]);
+  
 
   if (!isOpen) return null;
 
@@ -352,47 +343,13 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
                   اختر العميل (الكفيل) <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
-                  <input
-                    type="text"
-                    value={clientSearchQuery}
-                    onChange={(e) => {
-                      setClientSearchQuery(e.target.value);
-                      setShowClientDropdown(true);
-                    }}
-                    onFocus={() => setShowClientDropdown(true)}
+                  <ClientAutocomplete
+                    clients={clients}
+                    selectedId={formData.client_id || ''}
+                    onChange={handleSelectClient}
                     placeholder="ابحث بالاسم أو رقم الهوية أو الجوال..."
-                    className={`w-full px-3.5 py-2.5 bg-white border rounded-xl text-sm focus:outline-hidden focus:ring-2 transition-all ${
-                      errors.client_id ? 'border-red-500 ring-red-200' : 'border-slate-300 focus:border-emerald-500 focus:ring-emerald-200'
-                    }`}
                   />
-                  <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                 </div>
-
-                {/* Autocomplete Dropdown */}
-                {showClientDropdown && (
-                  <div className="absolute top-full right-0 left-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-xl z-20 max-h-48 overflow-y-auto divide-y divide-slate-100">
-                    {filteredClients.length > 0 ? (
-                      filteredClients.map(c => (
-                        <button
-                          key={c.id}
-                          type="button"
-                          onClick={() => handleSelectClient(c)}
-                          className="w-full text-right px-4 py-2.5 hover:bg-emerald-50 transition-colors flex items-center justify-between text-xs cursor-pointer"
-                        >
-                          <div>
-                            <p className="font-bold text-slate-800">{c.name}</p>
-                            <p className="text-slate-500 text-[11px]">هوية: {c.national_id} | {c.city_name || c.country_name}</p>
-                          </div>
-                          <span className="font-mono text-emerald-600 font-bold" dir="ltr">{c.full_mobile || c.mobile}</span>
-                        </button>
-                      ))
-                    ) : (
-                      <div className="p-3 text-center text-xs text-slate-500">
-                        لا يوجد عميل بهذا الاسم. يمكنك الضغط على "+ عميل جديد" لإضافته مباشرة.
-                      </div>
-                    )}
-                  </div>
-                )}
                 {errors.client_id && <p className="text-xs text-red-500 mt-1 font-medium">{errors.client_id}</p>}
               </div>
 
