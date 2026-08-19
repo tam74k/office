@@ -257,6 +257,7 @@ export function App() {
               onEditOrder={(order) => handleOpenNewOrderModal(order, null)}
               onUpdateOrder={handleSaveOrder}
               onUpdateOrderStatus={handleUpdateOrderStatus}
+              onDeleteOrder={handleDeleteOrder}
               onPrintReceipt={handlePrintReceipt}
               onAddNewOrder={() => handleOpenNewOrderModal(null, null)}
               onAddNewClient={() => handleOpenNewClientModal(null)}

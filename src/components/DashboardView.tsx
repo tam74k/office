@@ -39,6 +39,7 @@ import {
 } from 'recharts';
 import { Client, Order, OrderItem, Country, Profession, OrderStatus, OfficeProfile, WhatsAppTemplate } from '../types';
 import { matchesFlexibleArabic, formatCurrency, formatDate, openWhatsApp, buildWhatsAppMessage } from '../utils/helpers';
+import { OrdersView } from './OrdersView';
 
 export interface DashboardViewProps {
   clients: Client[];
@@ -54,6 +55,7 @@ export interface DashboardViewProps {
   onEditOrder?: (order: Order) => void;
   onUpdateOrder?: (order: Order) => void;
   onUpdateOrderStatus?: (order: Order, newStatus: OrderStatus) => void;
+  onDeleteOrder?: (orderId: string) => void;
   onPrintOrder?: (order: Order) => void;
   onPrintReceipt?: (order: Order) => void;
   onAddNewOrder?: () => void;
@@ -146,6 +148,7 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
   const [professionQuery, setProfessionQuery] = useState('');
   const [selectedStatus, setSelectedStatus] = useState<string>('الكل');
   const [selectedSponsorCountry, setSelectedSponsorCountry] = useState<string>('الكل');
+  const [selectedCountryForModal, setSelectedCountryForModal] = useState<string | null>(null);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
@@ -524,20 +527,14 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
               <button
                 key={sc.id}
                 id={`sponsor-btn-${sc.code.toLowerCase()}`}
-                onClick={() => setSelectedSponsorCountry(isSelected ? 'الكل' : sc.name)}
-                className={`p-3.5 rounded-xl border flex flex-col items-center justify-center gap-1.5 transition-all text-center ${
-                  isSelected
-                    ? 'bg-emerald-700 text-white border-emerald-800 shadow-md ring-2 ring-emerald-400/40'
-                    : 'bg-slate-50 hover:bg-emerald-50 text-slate-800 border-slate-200'
-                }`}
+                onClick={() => setSelectedCountryForModal(sc.name)}
+                className={`p-3.5 rounded-xl border flex flex-col items-center justify-center gap-1.5 transition-all text-center bg-slate-50 hover:bg-emerald-50 text-slate-800 border-slate-200`}
               >
                 <span className="text-3xl leading-none">{sc.flag_emoji}</span>
                 <span className="font-bold text-xs truncate max-w-full">
                   {sc.name.replace('المملكة العربية السعودية', 'السعودية').replace('الإمارات العربية المتحدة', 'الإمارات').replace('دولة ', '').replace('مملكة ', '')}
                 </span>
-                <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-semibold ${
-                  isSelected ? 'bg-white/20 text-white' : 'bg-slate-200/70 text-slate-700'
-                }`}>
+                <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-semibold bg-slate-200/70 text-slate-700`}>
                   {countryOrdersCount} طلب
                 </span>
               </button>
@@ -545,6 +542,31 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
           })}
         </div>
       </div>
+
+      {/* Orders View Modal for Selected Country */}
+      {selectedCountryForModal && (
+        <div className="fixed inset-0 z-[60] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4">
+          <div className="bg-slate-50 w-full max-w-7xl h-[95vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col">
+            <div className="overflow-y-auto p-4 sm:p-6 w-full flex-1">
+              <OrdersView
+                orders={orders.filter(o => o.sponsor_country_name === selectedCountryForModal)}
+                clients={clients}
+                countries={countries}
+                professions={professions}
+                officeProfile={officeProfile}
+                whatsAppTemplates={whatsAppTemplates}
+                onSaveOrder={props.onUpdateOrder!}
+                onDeleteOrder={props.onDeleteOrder!}
+                onPrintOrder={props.onPrintReceipt!}
+                onAddNewClient={props.onAddNewClient!}
+                isModalMode={true}
+                countryNameForModal={selectedCountryForModal}
+                onCloseModal={() => setSelectedCountryForModal(null)}
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Advanced Multi-Filters Box with Autocomplete and Flexible Search */}
       <div id="advanced-filters-panel" className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-4">

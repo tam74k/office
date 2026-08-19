@@ -41,6 +41,9 @@ interface OrdersViewProps {
   selectedClientForNewOrder?: Client | null;
   onClearSelectedClient?: () => void;
   onAddNewClient: () => void;
+  isModalMode?: boolean;
+  countryNameForModal?: string;
+  onCloseModal?: () => void;
 }
 
 const ORDER_STATUSES: OrderStatus[] = ['جديد', 'تم الاختيار', 'كشف طبي', 'تم التفييز', 'تم السفر', 'ملغي'];
@@ -57,7 +60,10 @@ export const OrdersView: React.FC<OrdersViewProps> = ({
   onPrintOrder,
   selectedClientForNewOrder,
   onClearSelectedClient,
-  onAddNewClient
+  onAddNewClient,
+  isModalMode,
+  countryNameForModal,
+  onCloseModal
 }) => {
   // Filter States
   const [searchTerm, setSearchTerm] = useState('');
@@ -105,17 +111,17 @@ export const OrdersView: React.FC<OrdersViewProps> = ({
     profession_name: '',
     worker_country_id: '',
     worker_country_name: '',
-    age_min: 25,
-    age_max: 40,
-    gender: 'ذكر',
-    religion: 'مسلم',
-    experience_type: 'خبرة سابقة بالخليج',
-    experience_years: 3,
-    salary: 1500,
+    age_min: undefined,
+    age_max: undefined,
+    gender: '',
+    religion: '',
+    experience_type: '',
+    experience_years: undefined,
+    salary: undefined,
     currency: officeProfile.default_currency || 'SAR',
     notes: '',
     status: 'جديد',
-    recruitment_cost: 9000
+    recruitment_cost: undefined
   });
 
   // Automatically setup new order if triggered with specific client
@@ -128,27 +134,27 @@ export const OrdersView: React.FC<OrdersViewProps> = ({
 
   const openNewOrderModal = (presetClient?: Client) => {
     const newOrderNum = `REC-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
-    const client = presetClient || (clients.length > 0 ? clients[0] : null);
+    const client = presetClient || null;
 
     const defaultItems: OrderItem[] = [
       {
         id: `item_${Date.now()}_1`,
         order_id: '',
-        profession_id: professions[0]?.id || 'p_driver',
-        profession_name: professions[0]?.name || 'سائق خاص',
-        worker_country_id: workerCountries[0]?.id || 'c_in',
-        worker_country_name: workerCountries[0]?.name || 'الهند',
-        age_min: 25,
-        age_max: 40,
-        gender: 'ذكر',
-        religion: 'مسلم',
-        experience_type: 'خبرة سابقة بالخليج',
-        experience_years: 3,
-        salary: professions[0]?.default_salary || 1600,
-        currency: professions[0]?.currency || 'SAR',
+        profession_id: '',
+        profession_name: '',
+        worker_country_id: '',
+        worker_country_name: '',
+        age_min: undefined,
+        age_max: undefined,
+        gender: '',
+        religion: '',
+        experience_type: '',
+        experience_years: undefined,
+        salary: undefined,
+        currency: 'SAR',
         notes: '',
         status: 'جديد',
-        recruitment_cost: 9000
+        recruitment_cost: undefined
       }
     ];
 
@@ -211,17 +217,17 @@ export const OrdersView: React.FC<OrdersViewProps> = ({
       profession_name: currentItem.profession_name || '',
       worker_country_id: currentItem.worker_country_id || '',
       worker_country_name: currentItem.worker_country_name || '',
-      age_min: Number(currentItem.age_min) || 25,
-      age_max: Number(currentItem.age_max) || 40,
-      gender: currentItem.gender || 'ذكر',
-      religion: currentItem.religion || 'مسلم',
-      experience_type: currentItem.experience_type || 'خبرة سابقة بالخليج',
-      experience_years: Number(currentItem.experience_years) || 0,
-      salary: Number(currentItem.salary) || 1500,
+      age_min: currentItem.age_min,
+      age_max: currentItem.age_max,
+      gender: currentItem.gender || '',
+      religion: currentItem.religion || '',
+      experience_type: currentItem.experience_type || '',
+      experience_years: currentItem.experience_years,
+      salary: currentItem.salary,
       currency: currentItem.currency || officeProfile.default_currency || 'SAR',
       notes: currentItem.notes || '',
       status: (currentItem.status as OrderStatus) || 'جديد',
-      recruitment_cost: Number(currentItem.recruitment_cost) || 8500,
+      recruitment_cost: currentItem.recruitment_cost,
       candidate_name: currentItem.candidate_name || '',
       passport_number: currentItem.passport_number || '',
       visa_number: currentItem.visa_number || ''
@@ -240,21 +246,21 @@ export const OrdersView: React.FC<OrdersViewProps> = ({
 
     // Reset current item builder with defaults
     setCurrentItem({
-      profession_id: professions[0]?.id || '',
-      profession_name: professions[0]?.name || '',
-      worker_country_id: workerCountries[0]?.id || '',
-      worker_country_name: workerCountries[0]?.name || '',
-      age_min: 25,
-      age_max: 40,
-      gender: 'ذكر',
-      religion: 'مسلم',
-      experience_type: 'خبرة سابقة بالخليج',
-      experience_years: 3,
-      salary: professions[0]?.default_salary || 1500,
+      profession_id: '',
+      profession_name: '',
+      worker_country_id: '',
+      worker_country_name: '',
+      age_min: undefined,
+      age_max: undefined,
+      gender: '',
+      religion: '',
+      experience_type: '',
+      experience_years: undefined,
+      salary: undefined,
       currency: officeProfile.default_currency || 'SAR',
       notes: '',
       status: 'جديد',
-      recruitment_cost: 8500
+      recruitment_cost: undefined
     });
   };
 
@@ -344,27 +350,38 @@ export const OrdersView: React.FC<OrdersViewProps> = ({
   };
 
   return (
-    <div id="orders-view-root" className="space-y-6 pb-12">
+    <div id="orders-view-root" className={`space-y-6 ${isModalMode ? '' : 'pb-12'}`}>
       {/* Top Header & New Order Button */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
         <div>
           <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
             <FileText className="w-5 h-5 text-emerald-600" />
-            <span>إدارة طلبات استقدام العمالة (Master - Detail)</span>
+            <span>{isModalMode && countryNameForModal ? `طلبات الاستقدام من/إلى دولة: ${countryNameForModal}` : 'إدارة طلبات استقدام العمالة (Master - Detail)'}</span>
           </h2>
           <p className="text-xs text-slate-500 mt-1">
-            إضافة ومتابعة طلبات الكفلاء المتعددة، وإسناد العمالة والمهن، وتحديث الحالات والتواصل الفوري
+            {isModalMode ? 'استعرض وابحث وعدّل طلبات هذه الدولة بكل سهولة' : 'إضافة ومتابعة طلبات الكفلاء المتعددة، وإسناد العمالة والمهن، وتحديث الحالات والتواصل الفوري'}
           </p>
         </div>
 
-        <button
-          id="btn-create-new-order-modal"
-          onClick={() => openNewOrderModal()}
-          className="flex items-center justify-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-emerald-600/30"
-        >
-          <Plus className="w-4 h-4" />
-          <span>إنشاء طلب استقدام جديد</span>
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            id="btn-create-new-order-modal"
+            onClick={() => openNewOrderModal()}
+            className="flex items-center justify-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-emerald-600/30"
+          >
+            <Plus className="w-4 h-4" />
+            <span>إنشاء طلب استقدام جديد</span>
+          </button>
+          
+          {isModalMode && onCloseModal && (
+            <button
+              onClick={onCloseModal}
+              className="p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Filter Bar */}
@@ -1019,10 +1036,11 @@ export const OrdersView: React.FC<OrdersViewProps> = ({
                     <div>
                       <label className="block text-[10px] font-bold text-slate-600 mb-0.5">الخبرة المطلوبة:</label>
                       <select
-                        value={currentItem.experience_type || 'خبرة سابقة بالخليج'}
+                        value={currentItem.experience_type || ''}
                         onChange={(e) => setCurrentItem(p => ({ ...p, experience_type: e.target.value as any }))}
                         className="w-full px-2 py-1.5 rounded-lg border border-slate-300 bg-slate-50 text-xs"
                       >
+                        <option value="">الخبرة...</option>
                         <option value="جديد (بدون خبرة)">جديد (بدون خبرة)</option>
                         <option value="خبرة سابقة بالخليج">خبرة سابقة بالخليج</option>
                         <option value="خبرة محلية">خبرة محلية</option>
@@ -1035,19 +1053,21 @@ export const OrdersView: React.FC<OrdersViewProps> = ({
                       <label className="block text-[10px] font-bold text-slate-600 mb-0.5">الجنس والديانة:</label>
                       <div className="grid grid-cols-2 gap-1">
                         <select
-                          value={currentItem.gender || 'ذكر'}
+                          value={currentItem.gender || ''}
                           onChange={(e) => setCurrentItem(p => ({ ...p, gender: e.target.value as any }))}
                           className="w-full px-1.5 py-1.5 rounded-lg border border-slate-300 bg-slate-50 text-xs"
                         >
+                          <option value="">الجنس...</option>
                           <option value="ذكر">ذكر</option>
                           <option value="أنثى">أنثى</option>
                           <option value="غير محدد">غير محدد</option>
                         </select>
                         <select
-                          value={currentItem.religion || 'مسلم'}
+                          value={currentItem.religion || ''}
                           onChange={(e) => setCurrentItem(p => ({ ...p, religion: e.target.value as any }))}
                           className="w-full px-1.5 py-1.5 rounded-lg border border-slate-300 bg-slate-50 text-xs"
                         >
+                          <option value="">الديانة...</option>
                           <option value="مسلم">مسلم</option>
                           <option value="غير مسلم">غير مسلم</option>
                           <option value="لا يشترط">لا يشترط</option>

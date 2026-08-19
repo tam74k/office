@@ -95,18 +95,15 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
 
   // Open Form for new client
   const openNewClientModal = () => {
-    const defaultCountry = sponsorCountries[0] || countries[0];
-    const defaultCities = cities.filter(c => c.country_id === defaultCountry?.id);
-
     setFormData({
       name: '',
       national_id: '',
-      country_id: defaultCountry?.id || '',
-      country_name: defaultCountry?.name || '',
-      phone_code: defaultCountry?.phone_code || '+966',
+      country_id: '',
+      country_name: '',
+      phone_code: '',
       mobile: '',
-      city_id: defaultCities[0]?.id || '',
-      city_name: defaultCities[0]?.name || '',
+      city_id: '',
+      city_name: '',
       address: '',
       email: '',
       notes: '',
@@ -125,18 +122,25 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
   // Handle Country selection in Form: automatically sets phone_code and filters cities!
   const handleCountryChangeInForm = (countryId: string) => {
     const selectedCountry = sponsorCountries.find(c => c.id === countryId);
-    if (!selectedCountry) return;
-
-    const matchedCities = cities.filter(c => c.country_id === countryId);
-    const firstCity = matchedCities[0];
+    if (!selectedCountry) {
+      setFormData(prev => ({
+        ...prev,
+        country_id: '',
+        country_name: '',
+        phone_code: '',
+        city_id: '',
+        city_name: ''
+      }));
+      return;
+    }
 
     setFormData(prev => ({
       ...prev,
       country_id: selectedCountry.id,
       country_name: selectedCountry.name,
       phone_code: selectedCountry.phone_code, // Automatically set phone code!
-      city_id: firstCity ? firstCity.id : '',
-      city_name: firstCity ? firstCity.name : ''
+      city_id: '',
+      city_name: ''
     }));
   };
 
@@ -635,6 +639,7 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
                   className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white font-semibold"
                   required
                 >
+                  <option value="">اختر الدولة...</option>
                   {sponsorCountries.map(sc => (
                     <option key={sc.id} value={sc.id}>
                       {sc.flag_emoji} {sc.name} ({sc.phone_code})
@@ -674,8 +679,9 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
                   onChange={(e) => handleCityChangeInForm(e.target.value)}
                   className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white"
                 >
+                  <option value="">اختر المدينة...</option>
                   {availableCitiesInForm.length === 0 ? (
-                    <option value="">لا توجد مدن مسجلة لهذه الدولة</option>
+                    <option value="" disabled>لا توجد مدن مسجلة لهذه الدولة</option>
                   ) : (
                     availableCitiesInForm.map(city => (
                       <option key={city.id} value={city.id}>{city.name}</option>

@@ -29,9 +29,9 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
   const [formData, setFormData] = useState<Partial<Client>>({
     name: '',
     national_id: '',
-    country_id: sponsorCountries[0]?.id || 'c_sa',
-    country_name: sponsorCountries[0]?.name || 'المملكة العربية السعودية',
-    phone_code: sponsorCountries[0]?.phone_code || '+966',
+    country_id: '',
+    country_name: '',
+    phone_code: '',
     mobile: '',
     city_id: '',
     city_name: '',
@@ -47,18 +47,16 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
     if (clientToEdit) {
       setFormData({ ...clientToEdit });
     } else {
-      const defaultCountry = sponsorCountries[0] || countries[0];
-      const defaultCities = cities.filter(c => c.country_id === defaultCountry?.id);
       setFormData({
         id: `cli_${Date.now()}`,
         name: '',
         national_id: '',
-        country_id: defaultCountry?.id || 'c_sa',
-        country_name: defaultCountry?.name || 'المملكة العربية السعودية',
-        phone_code: defaultCountry?.phone_code || '+966',
+        country_id: '',
+        country_name: '',
+        phone_code: '',
         mobile: '',
-        city_id: defaultCities[0]?.id || '',
-        city_name: defaultCities[0]?.name || '',
+        city_id: '',
+        city_name: '',
         address: '',
         email: '',
         notes: '',
@@ -78,16 +76,25 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
 
   const handleCountryChange = (countryId: string) => {
     const selected = countries.find(c => c.id === countryId);
-    if (!selected) return;
+    if (!selected) {
+      setFormData(prev => ({
+        ...prev,
+        country_id: '',
+        country_name: '',
+        phone_code: '',
+        city_id: '',
+        city_name: ''
+      }));
+      return;
+    }
 
-    const countryCities = cities.filter(c => c.country_id === countryId);
     setFormData(prev => ({
       ...prev,
       country_id: selected.id,
       country_name: selected.name,
       phone_code: selected.phone_code,
-      city_id: countryCities[0]?.id || '',
-      city_name: countryCities[0]?.name || ''
+      city_id: '',
+      city_name: ''
     }));
   };
 
@@ -96,6 +103,8 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
     if (!formData.name?.trim()) newErrors.name = 'اسم العميل مطلوب';
     if (!formData.national_id?.trim()) newErrors.national_id = 'رقم الهوية / الإقامة مطلوب';
     if (!formData.mobile?.trim()) newErrors.mobile = 'رقم الجوال مطلوب';
+    if (!formData.country_id) newErrors.country_id = 'دولة الكفيل مطلوبة';
+    if (!formData.city_id) newErrors.city_id = 'المدينة مطلوبة';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -111,13 +120,13 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
       id: formData.id || `cli_${Date.now()}`,
       name: formData.name!.trim(),
       national_id: formData.national_id!.trim(),
-      country_id: formData.country_id || 'c_sa',
-      country_name: formData.country_name || 'المملكة العربية السعودية',
-      phone_code: formData.phone_code || '+966',
+      country_id: formData.country_id!,
+      country_name: formData.country_name!,
+      phone_code: formData.phone_code!,
       mobile: cleanedMobile,
       full_mobile: fullMobile,
-      city_id: formData.city_id || '',
-      city_name: formData.city_name || '',
+      city_id: formData.city_id!,
+      city_name: formData.city_name!,
       address: formData.address || '',
       email: formData.email || '',
       notes: formData.notes || '',
@@ -209,14 +218,18 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
               <select
                 value={formData.country_id || ''}
                 onChange={(e) => handleCountryChange(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:outline-hidden focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all"
+                className={`w-full px-3.5 py-2.5 bg-slate-50 border rounded-xl text-sm focus:outline-hidden focus:ring-2 transition-all ${
+                  errors.country_id ? 'border-red-500 ring-red-200' : 'border-slate-300 focus:border-emerald-500 focus:ring-emerald-200'
+                }`}
               >
+                <option value="">اختر الدولة...</option>
                 {sponsorCountries.map((c) => (
                   <option key={c.id} value={c.id}>
                     {c.flag_emoji} {c.name} ({c.phone_code})
                   </option>
                 ))}
               </select>
+              {errors.country_id && <p className="text-xs text-red-500 mt-1 font-medium">{errors.country_id}</p>}
             </div>
 
             {/* Mobile with Auto Dial Code */}
@@ -257,7 +270,10 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
                     city_name: selectedCity ? selectedCity.name : ''
                   });
                 }}
-                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:outline-hidden focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all"
+                disabled={!formData.country_id}
+                className={`w-full px-3.5 py-2.5 bg-slate-50 border rounded-xl text-sm focus:outline-hidden focus:ring-2 transition-all ${
+                  errors.city_id ? 'border-red-500 ring-red-200' : 'border-slate-300 focus:border-emerald-500 focus:ring-emerald-200'
+                }`}
               >
                 <option value="">اختر المدينة...</option>
                 {availableCities.map((ct) => (
@@ -266,6 +282,7 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
                   </option>
                 ))}
               </select>
+              {errors.city_id && <p className="text-xs text-red-500 mt-1 font-medium">{errors.city_id}</p>}
             </div>
 
             {/* Email */}

@@ -78,25 +78,25 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
       setFormData({ ...orderToEdit });
       setClientSearchQuery(orderToEdit.client_name || '');
     } else {
-      const targetClient = preselectedClient || (clients.length > 0 ? clients[0] : null);
+      const targetClient = preselectedClient || null;
       const generatedOrderNo = `ORD-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
 
       const initialItem: OrderItem = {
         id: `item_${Date.now()}_1`,
         order_id: '',
-        profession_id: professions[0]?.id || 'p_driver',
-        profession_name: professions[0]?.name || 'سائق خاص',
-        worker_country_id: workerCountries[0]?.id || 'c_in',
-        worker_country_name: workerCountries[0]?.name || 'الهند',
-        age_min: 25,
-        age_max: 45,
-        gender: 'ذكر',
-        religion: 'مسلم',
-        experience_type: 'خبرة سابقة بالخليج',
-        experience_years: 2,
-        salary: professions[0]?.default_salary || 1600,
+        profession_id: '',
+        profession_name: '',
+        worker_country_id: '',
+        worker_country_name: '',
+        age_min: undefined,
+        age_max: undefined,
+        gender: '',
+        religion: '',
+        experience_type: '',
+        experience_years: undefined,
+        salary: undefined,
         currency: 'SAR',
-        recruitment_cost: 12000,
+        recruitment_cost: undefined,
         status: 'جديد',
         notes: ''
       };
@@ -171,24 +171,22 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
 
   // Add Item
   const handleAddItem = () => {
-    const defaultProf = professions[0];
-    const defaultWorkerCountry = workerCountries[0] || countries[0];
     const newItem: OrderItem = {
       id: `item_${Date.now()}_${Math.random().toString(36).substring(2, 5)}`,
       order_id: formData.id || '',
-      profession_id: defaultProf?.id || '',
-      profession_name: defaultProf?.name || '',
-      worker_country_id: defaultWorkerCountry?.id || '',
-      worker_country_name: defaultWorkerCountry?.name || '',
-      age_min: 25,
-      age_max: 40,
-      gender: 'ذكر',
-      religion: 'مسلم',
-      experience_type: 'جديد (بدون خبرة)',
-      experience_years: 0,
-      salary: defaultProf?.default_salary || 1500,
+      profession_id: '',
+      profession_name: '',
+      worker_country_id: '',
+      worker_country_name: '',
+      age_min: undefined,
+      age_max: undefined,
+      gender: '',
+      religion: '',
+      experience_type: '',
+      experience_years: undefined,
+      salary: undefined,
       currency: 'SAR',
-      recruitment_cost: 10000,
+      recruitment_cost: undefined,
       status: 'جديد',
       notes: ''
     };
@@ -537,10 +535,11 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
                     <div className="sm:col-span-2">
                       <label className="block text-[11px] font-bold text-slate-600 mb-1">نوع الخبرة</label>
                       <select
-                        value={item.experience_type || 'خبرة سابقة بالخليج'}
+                        value={item.experience_type || ''}
                         onChange={(e) => handleUpdateItemField(item.id, 'experience_type', e.target.value)}
                         className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs focus:outline-hidden focus:border-emerald-500"
                       >
+                        <option value="">الخبرة...</option>
                         <option value="جديد (بدون خبرة)">جديد (بدون خبرة)</option>
                         <option value="خبرة سابقة بالخليج">خبرة سابقة بالخليج</option>
                         <option value="خبرة محلية">خبرة محلية</option>
