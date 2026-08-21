@@ -287,7 +287,7 @@ export const OrdersView: React.FC<OrdersViewProps> = ({
     }
 
     const orderToSave: Order = {
-      id: editingOrder ? editingOrder.id : `ord_${Date.now()}`,
+      id: editingOrder ? editingOrder.id : undefined,
       order_number: formData.order_number || `REC-${Date.now()}`,
       client_id: formData.client_id || '',
       client_name: formData.client_name || '',

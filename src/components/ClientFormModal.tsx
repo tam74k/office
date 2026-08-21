@@ -44,6 +44,11 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
+    if (!isOpen) {
+      setErrors({});
+      return;
+    }
+
     if (clientToEdit) {
       setFormData({ ...clientToEdit });
     } else {
@@ -65,7 +70,7 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
       });
     }
     setErrors({});
-  }, [clientToEdit, isOpen, sponsorCountries, countries, cities]);
+  }, [isOpen, clientToEdit]);
 
   const availableCities = useMemo(() => {
     if (!formData.country_id) return [];

@@ -103,23 +103,23 @@ export function App() {
   // Clients Handlers
   const handleSaveClient = async (client: Client) => {
     await StorageService.saveClient(client);
-    setClients(StorageService.getClients());
+    await refreshAllData();
   };
 
   const handleToggleArchiveClient = async (clientId: string) => {
     await StorageService.toggleArchiveClient(clientId);
-    setClients(StorageService.getClients());
+    await refreshAllData();
   };
 
   const handleDeleteClient = async (clientId: string) => {
     await StorageService.deleteClient(clientId);
-    setClients(StorageService.getClients());
+    await refreshAllData();
   };
 
   // Orders Handlers
   const handleSaveOrder = async (order: Order) => {
     await StorageService.saveOrder(order);
-    setOrders(StorageService.getOrders());
+    await refreshAllData();
   };
 
   const handleUpdateOrderStatus = async (order: Order, newStatus: OrderStatus) => {
@@ -129,12 +129,12 @@ export function App() {
       updated_at: new Date().toISOString()
     };
     await StorageService.saveOrder(updatedOrder);
-    setOrders(StorageService.getOrders());
+    await refreshAllData();
   };
 
   const handleDeleteOrder = async (orderId: string) => {
     await StorageService.deleteOrder(orderId);
-    setOrders(StorageService.getOrders());
+    await refreshAllData();
   };
 
   // Countries Handlers
@@ -372,7 +372,7 @@ export function App() {
       </div>
 
       {/* In-Place Client Creation / Edit Modal */}
-      <ClientFormModal
+      {isClientModalOpen && <ClientFormModal
         isOpen={isClientModalOpen}
         onClose={() => {
           setIsClientModalOpen(false);
@@ -386,10 +386,10 @@ export function App() {
           // If order modal was waiting or opened, attach client
           setPreselectedClientForOrder(savedClient);
         }}
-      />
+      />}
 
       {/* In-Place Order Creation / Edit Modal */}
-      <OrderFormModal
+      {isOrderModalOpen && <OrderFormModal
         isOpen={isOrderModalOpen}
         onClose={() => {
           setIsOrderModalOpen(false);
@@ -406,7 +406,7 @@ export function App() {
         onOpenNewClientModal={() => {
           handleOpenNewClientModal(null);
         }}
-      />
+      />}
 
       {/* Official Receipt & Contract Print Modal */}
       {receiptOrder && (

@@ -72,9 +72,13 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
 
   // Initialize or reset form
   useEffect(() => {
+    if (!isOpen) {
+      setErrors({});
+      return;
+    }
+
     if (orderToEdit) {
       setFormData({ ...orderToEdit });
-      
     } else {
       const targetClient = preselectedClient || null;
       const generatedOrderNo = `ORD-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
@@ -119,10 +123,9 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
         items: [initialItem],
         created_at: new Date().toISOString()
       });
-      
     }
     setErrors({});
-  }, [orderToEdit, preselectedClient, isOpen, clients, professions, workerCountries]);
+  }, [isOpen, orderToEdit]); // Removed clients, preselectedClient, professions from deps to avoid resetting while open
 
   // Recalculate total and remaining whenever items or paid amount change
   const handleItemCostChange = (itemId: string, newCost: number) => {

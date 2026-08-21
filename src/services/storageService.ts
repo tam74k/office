@@ -249,19 +249,11 @@ export const StorageService = {
 
   // 4. Clients / Customers
   getClients(): Client[] {
-    const raw = localStorage.getItem(STORAGE_KEYS.CLIENTS);
-    if (!raw) {
-      return [];
-    }
-    try {
-      return JSON.parse(raw);
-    } catch {
-      return [];
-    }
+    return [];
   },
 
   saveClients(clients: Client[]) {
-    localStorage.setItem(STORAGE_KEYS.CLIENTS, JSON.stringify(clients));
+    // localStorage.setItem(STORAGE_KEYS.CLIENTS, JSON.stringify(clients));
   },
 
   async saveClient(client: Client): Promise<Client> {
@@ -278,7 +270,8 @@ export const StorageService = {
           phone: fullPhone || client.mobile,
           visa_number: client.national_id || '',
           commercial_record: client.notes || client.address || null,
-          city: client.city_name || null,
+          country_id: client.country_id ? Number(client.country_id) : null,
+          city_id: client.city_id ? Number(client.city_id) : null,
           is_archived: Boolean(client.is_archived),
           created_at: client.created_at || new Date().toISOString()
         };
@@ -353,19 +346,11 @@ export const StorageService = {
 
   // 5. Orders & Order Details
   getOrders(): Order[] {
-    const raw = localStorage.getItem(STORAGE_KEYS.ORDERS);
-    if (!raw) {
-      return [];
-    }
-    try {
-      return JSON.parse(raw);
-    } catch {
-      return [];
-    }
+    return [];
   },
 
   saveOrders(orders: Order[]) {
-    localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(orders));
+    // localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(orders));
   },
 
   async saveOrder(order: Order): Promise<Order> {
@@ -596,22 +581,27 @@ export const StorageService = {
       // 4. Clients (from customers table)
       let clients: Client[] = [];
       if (custRes.data && !custRes.error) {
-        clients = custRes.data.map(c => ({
-          id: String(c.id),
-          name: c.name_ar,
-          national_id: c.visa_number || '',
-          country_id: String(c.country_id || '1'),
-          country_name: 'المملكة العربية السعودية',
-          phone_code: '+966',
-          mobile: c.phone || '',
-          full_mobile: c.phone || '',
-          city_id: String(c.city_id || ''),
-          city_name: c.city || '',
-          address: c.commercial_record || '',
-          notes: '',
-          is_archived: Boolean(c.is_archived),
-          created_at: c.created_at || new Date().toISOString()
-        }));
+        clients = custRes.data.map(c => {
+          const matchedCountry = countries.find(co => co.id === String(c.country_id));
+          const matchedCity = cities.find(ci => ci.id === String(c.city_id));
+
+          return {
+            id: String(c.id),
+            name: c.name_ar,
+            national_id: c.visa_number || '',
+            country_id: c.country_id ? String(c.country_id) : '',
+            country_name: matchedCountry ? matchedCountry.name : '',
+            phone_code: matchedCountry ? matchedCountry.phone_code : '+966',
+            mobile: c.phone || '',
+            full_mobile: c.phone || '',
+            city_id: c.city_id ? String(c.city_id) : '',
+            city_name: matchedCity ? matchedCity.name : '',
+            address: c.commercial_record || '',
+            notes: '',
+            is_archived: Boolean(c.is_archived),
+            created_at: c.created_at || new Date().toISOString()
+          };
+        });
         this.saveClients(clients);
       } else {
         clients = this.getClients();
