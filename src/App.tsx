@@ -226,7 +226,7 @@ export function App() {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden">
         {/* Mobile & Tablet Top Bar */}
-        <header className="lg:hidden bg-slate-900 dark:bg-slate-950 text-white p-3 sm:p-4 flex items-center justify-between sticky top-0 z-30 shadow-md">
+        <header className="lg:hidden print:hidden bg-slate-900 dark:bg-slate-950 text-white p-3 sm:p-4 flex items-center justify-between sticky top-0 z-30 shadow-md">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setIsMobileMenuOpen(true)}
@@ -265,7 +265,7 @@ export function App() {
         </header>
 
         {/* Content View Container */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto print:p-0 print:max-w-none">
           {activeTab === 'reports' && (
             <ReportsView
               orders={orders}

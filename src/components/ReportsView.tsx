@@ -81,6 +81,15 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
     window.print();
   };
 
+  const handleClearFilters = () => {
+    setSelectedClientId('');
+    setSelectedSponsorCountryId('');
+    setSelectedWorkerCountryId('');
+    setSelectedProfessionId('');
+    setStartDate('');
+    setEndDate('');
+  };
+
   return (
     <div className="space-y-6">
       {/* Header (Hidden in Print) */}
@@ -91,7 +100,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
         </div>
         <button
           onClick={handlePrint}
-          className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md shadow-emerald-600/20 transition-all"
+          className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md shadow-emerald-600/20 transition-all cursor-pointer"
         >
           <Printer className="w-4 h-4" />
           <span>طباعة التقرير</span>
@@ -100,9 +109,17 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
 
       {/* Filters (Hidden in Print) */}
       <div className="bg-white dark:bg-slate-900 dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm print:hidden space-y-4">
-        <div className="flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
-          <Filter className="w-4 h-4 text-emerald-600" />
-          <h4 className="font-bold text-sm text-slate-900 dark:text-white">عوامل التصفية</h4>
+        <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+          <div className="flex items-center gap-2">
+            <Filter className="w-4 h-4 text-emerald-600" />
+            <h4 className="font-bold text-sm text-slate-900 dark:text-white">عوامل التصفية</h4>
+          </div>
+          <button
+            onClick={handleClearFilters}
+            className="text-xs font-bold text-slate-500 hover:text-red-500 transition-colors cursor-pointer"
+          >
+            تفريغ الحقول
+          </button>
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">

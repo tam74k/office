@@ -194,7 +194,7 @@ export const Sidebar: React.FC<SidebarProps> = (props) => {
       {/* Desktop Sticky Sidebar - Part of the standard document flow so it never covers left data */}
       <aside 
         id="desktop-sidebar"
-        className="hidden lg:flex lg:flex-col lg:w-64 lg:shrink-0 lg:sticky lg:top-0 lg:h-screen lg:border-l lg:border-slate-800 shadow-xl z-20"
+        className="hidden lg:flex lg:flex-col lg:w-64 print:hidden lg:shrink-0 lg:sticky lg:top-0 lg:h-screen lg:border-l lg:border-slate-800 shadow-xl z-20"
       >
         {sidebarContent}
       </aside>
