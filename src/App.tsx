@@ -13,6 +13,7 @@ import {
 import { StorageService } from './services/storageService';
 import { Sidebar } from './components/Sidebar';
 import { DashboardView } from './components/DashboardView';
+import { ReportsView } from './components/ReportsView';
 import { ClientsView } from './components/ClientsView';
 import { OrdersView } from './components/OrdersView';
 import { CountriesView } from './components/CountriesView';
@@ -243,6 +244,16 @@ export function App() {
 
         {/* Content View Container */}
         <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
+          {activeTab === 'reports' && (
+            <ReportsView
+              orders={orders}
+              clients={clients}
+              countries={countries}
+              professions={professions}
+              officeProfile={officeProfile}
+            />
+          )}
+
           {activeTab === 'dashboard' && (
             <DashboardView
               clients={clients}

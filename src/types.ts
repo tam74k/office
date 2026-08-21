@@ -126,6 +126,7 @@ export interface SupabaseConfig {
 
 export type NavigationTab = 
   | 'dashboard'
+  | 'reports'
   | 'orders'
   | 'clients'
   | 'countries'

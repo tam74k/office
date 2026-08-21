@@ -16,6 +16,7 @@ import {
   UserPlus
 } from 'lucide-react';
 import { NavigationTab, OfficeProfile } from '../types';
+import { BarChart2 } from 'lucide-react';
 
 export interface SidebarProps {
   activeTab?: NavigationTab;
@@ -51,6 +52,7 @@ export const Sidebar: React.FC<SidebarProps> = (props) => {
 
   const menuItems = [
     { id: 'dashboard' as NavigationTab, label: 'لوحة المعلومات', icon: LayoutDashboard, badge: null },
+    { id: 'reports' as NavigationTab, label: 'التقارير', icon: BarChart2, badge: null },
     { id: 'orders' as NavigationTab, label: 'إدارة الطلبات', icon: FileText, badge: props.ordersCount },
     { id: 'clients' as NavigationTab, label: 'العملاء (الكفلاء)', icon: Users, badge: props.clientsCount },
     { id: 'countries' as NavigationTab, label: 'جدول الدول', icon: Globe2, badge: null },
