@@ -405,6 +405,17 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
                       >
                         {client.is_archived ? <RotateCcw className="w-4 h-4" /> : <Archive className="w-4 h-4" />}
                       </button>
+                      <button
+                        onClick={() => {
+                          if (window.confirm('هل أنت متأكد من الحذف النهائي للعميل؟ سيتم حذف كافة الطلبات المرتبطة به أيضاً ولا يمكن التراجع عن هذا الإجراء.')) {
+                            onDeleteClient(client.id);
+                          }
+                        }}
+                        title="حذف نهائي"
+                        className="p-1.5 text-slate-400 dark:text-slate-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
                     </div>
                   </div>
 
