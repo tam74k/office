@@ -36,16 +36,26 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
 
       if (selectedSponsorCountryId) {
         const sponsorCountry = sponsorCountries.find(c => c.id === selectedSponsorCountryId);
-        if (sponsorCountry && order.sponsor_country_name !== sponsorCountry.name) return false;
+        const matchesId = order.sponsor_country_id === selectedSponsorCountryId;
+        const matchesName = sponsorCountry && order.sponsor_country_name === sponsorCountry.name;
+        if (!matchesId && !matchesName) return false;
       }
 
       if (selectedWorkerCountryId) {
-        const hasMatchingCountry = order.items.some(item => item.worker_country_id === selectedWorkerCountryId);
+        const workerCountry = countries.find(c => c.id === selectedWorkerCountryId);
+        const hasMatchingCountry = order.items.some(item => 
+          item.worker_country_id === selectedWorkerCountryId || 
+          (workerCountry && item.worker_country_name === workerCountry.name)
+        );
         if (!hasMatchingCountry) return false;
       }
 
       if (selectedProfessionId) {
-        const hasMatchingProfession = order.items.some(item => item.profession_id === selectedProfessionId);
+        const profession = professions.find(p => p.id === selectedProfessionId);
+        const hasMatchingProfession = order.items.some(item => 
+          item.profession_id === selectedProfessionId ||
+          (profession && item.profession_name === profession.name)
+        );
         if (!hasMatchingProfession) return false;
       }
 
