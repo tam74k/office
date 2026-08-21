@@ -550,7 +550,7 @@ export const StorageService = {
 
       // 1. Countries
       let countries: Country[] = [];
-      if (countriesRes.data && countriesRes.data.length > 0) {
+      if (countriesRes.data && !countriesRes.error) {
         countries = countriesRes.data.map(c => ({
           id: String(c.id),
           name: c.name,
@@ -566,7 +566,7 @@ export const StorageService = {
 
       // 2. Cities
       let cities: City[] = [];
-      if (citiesRes.data && citiesRes.data.length > 0) {
+      if (citiesRes.data && !citiesRes.error) {
         cities = citiesRes.data.map(ct => ({
           id: String(ct.id),
           country_id: String(ct.country_id || '1'),
@@ -579,7 +579,7 @@ export const StorageService = {
 
       // 3. Professions
       let professions: Profession[] = [];
-      if (profsRes.data && profsRes.data.length > 0) {
+      if (profsRes.data && !profsRes.error) {
         professions = profsRes.data.map(p => ({
           id: String(p.id),
           name: p.name_ar,
@@ -595,7 +595,7 @@ export const StorageService = {
 
       // 4. Clients (from customers table)
       let clients: Client[] = [];
-      if (custRes.data && custRes.data.length > 0) {
+      if (custRes.data && !custRes.error) {
         clients = custRes.data.map(c => ({
           id: String(c.id),
           name: c.name_ar,
@@ -619,7 +619,7 @@ export const StorageService = {
 
       // 5. Orders (from orders & order_details tables)
       let orders: Order[] = [];
-      if (ordersRes.data && ordersRes.data.length > 0) {
+      if (ordersRes.data && !ordersRes.error) {
         orders = ordersRes.data.map((o: any) => {
           const client = clients.find(c => c.id === String(o.customer_id));
           const items: OrderItem[] = (o.order_details || []).map((det: any, idx: number) => ({
