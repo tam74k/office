@@ -76,13 +76,13 @@ export const ProfessionsView: React.FC<ProfessionsViewProps> = ({
   return (
     <div id="professions-view-root" className="space-y-6 pb-12">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-slate-900 dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs">
         <div>
-          <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
             <Briefcase className="w-5 h-5 text-emerald-600" />
             <span>جدول المهن والأجور والعملات</span>
           </h2>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 mt-1">
             إدارة المهن (المنزلية والمهنية) وتحديد الأجور والرواتب الافتراضية لكل مهنة بشكل منفصل مع دعم مختلف العملات
           </p>
         </div>
@@ -98,12 +98,12 @@ export const ProfessionsView: React.FC<ProfessionsViewProps> = ({
       </div>
 
       {/* Filter Tabs & Search */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl">
+      <div className="bg-white dark:bg-slate-900 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 dark:bg-slate-800 p-1 rounded-xl">
           <button
             onClick={() => setCategoryFilter('all')}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
-              categoryFilter === 'all' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              categoryFilter === 'all' ? 'bg-white dark:bg-slate-900 dark:bg-slate-950 text-slate-900 dark:text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             جميع المهن ({professions.length})
@@ -111,7 +111,7 @@ export const ProfessionsView: React.FC<ProfessionsViewProps> = ({
           <button
             onClick={() => setCategoryFilter('منزلية')}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
-              categoryFilter === 'منزلية' ? 'bg-emerald-700 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              categoryFilter === 'منزلية' ? 'bg-emerald-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             عمالة منزلية ({professions.filter(p => p.category === 'منزلية').length})
@@ -119,7 +119,7 @@ export const ProfessionsView: React.FC<ProfessionsViewProps> = ({
           <button
             onClick={() => setCategoryFilter('مهنية')}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
-              categoryFilter === 'مهنية' ? 'bg-blue-700 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              categoryFilter === 'مهنية' ? 'bg-blue-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             عمالة مهنية وفنية ({professions.filter(p => p.category === 'مهنية').length})
@@ -132,9 +132,9 @@ export const ProfessionsView: React.FC<ProfessionsViewProps> = ({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="بحث بالمهنة أو الوصف..."
-            className="w-full pl-3 pr-8 py-2 text-xs rounded-xl border border-slate-300 bg-slate-50"
+            className="w-full pl-3 pr-8 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-950/50"
           />
-          <Search className="w-3.5 h-3.5 absolute right-2.5 top-2.5 text-slate-400" />
+          <Search className="w-3.5 h-3.5 absolute right-2.5 top-2.5 text-slate-400 dark:text-slate-500 dark:text-slate-400" />
         </div>
       </div>
 
@@ -143,14 +143,14 @@ export const ProfessionsView: React.FC<ProfessionsViewProps> = ({
         {filteredProfessions.map(prof => (
           <div
             key={prof.id}
-            className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs hover:border-emerald-300 transition-all flex flex-col justify-between"
+            className="bg-white dark:bg-slate-900 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs hover:border-emerald-300 transition-all flex flex-col justify-between"
           >
             <div>
               <div className="flex items-start justify-between gap-2 mb-2">
                 <div>
-                  <h3 className="font-bold text-sm text-slate-900">{prof.name}</h3>
+                  <h3 className="font-bold text-sm text-slate-900 dark:text-white">{prof.name}</h3>
                   <span className={`text-[10px] px-2 py-0.5 rounded-md font-bold mt-1 inline-block ${
-                    prof.category === 'منزلية' ? 'bg-emerald-100 text-emerald-800' : 'bg-blue-100 text-blue-800'
+                    prof.category === 'منزلية' ? 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800' : 'bg-blue-100 dark:bg-blue-900/50 text-blue-800'
                   }`}>
                     عمالة {prof.category}
                   </span>
@@ -159,7 +159,7 @@ export const ProfessionsView: React.FC<ProfessionsViewProps> = ({
                 <div className="flex items-center gap-1">
                   <button
                     onClick={() => openEditModal(prof)}
-                    className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                    className="p-1.5 text-slate-400 dark:text-slate-500 dark:text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors"
                   >
                     <Edit3 className="w-3.5 h-3.5" />
                   </button>
@@ -169,7 +169,7 @@ export const ProfessionsView: React.FC<ProfessionsViewProps> = ({
                         onDeleteProfession(prof.id);
                       }
                     }}
-                    className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                    className="p-1.5 text-slate-400 dark:text-slate-500 dark:text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/30 rounded-lg transition-colors"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
@@ -177,15 +177,15 @@ export const ProfessionsView: React.FC<ProfessionsViewProps> = ({
               </div>
 
               {prof.description && (
-                <p className="text-xs text-slate-500 mb-3 line-clamp-2">
+                <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 mb-3 line-clamp-2">
                   {prof.description}
                 </p>
               )}
             </div>
 
             {/* Salary Box with distinct currency */}
-            <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-center justify-between mt-2">
-              <span className="text-[11px] text-slate-500 flex items-center gap-1">
+            <div className="bg-slate-50 dark:bg-slate-950/50 p-3 rounded-xl border border-slate-100 dark:border-slate-800 flex items-center justify-between mt-2">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 dark:text-slate-500 flex items-center gap-1">
                 <Coins className="w-3.5 h-3.5 text-amber-500" />
                 <span>الراتب المقترح:</span>
               </span>
@@ -200,36 +200,36 @@ export const ProfessionsView: React.FC<ProfessionsViewProps> = ({
       {/* Add / Edit Profession Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full border border-slate-200 text-slate-800">
-            <div className="bg-slate-900 text-white p-5 flex items-center justify-between">
+          <div className="bg-white dark:bg-slate-900 dark:bg-slate-950 rounded-2xl shadow-2xl max-w-md w-full border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100">
+            <div className="bg-slate-900 dark:bg-slate-950 text-white p-5 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Briefcase className="w-5 h-5 text-emerald-400" />
                 <h3 className="font-bold text-sm">{editingProfession ? 'تعديل بيانات المهنة والأجر' : 'إضافة مهنة جديدة'}</h3>
               </div>
-              <button onClick={() => setIsModalOpen(false)} className="p-1.5 text-slate-400 hover:text-white rounded-lg">
+              <button onClick={() => setIsModalOpen(false)} className="p-1.5 text-slate-400 dark:text-slate-500 dark:text-slate-400 hover:text-white rounded-lg">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <form onSubmit={handleSubmit} className="p-6 space-y-4 text-xs">
               <div>
-                <label className="block text-[11px] font-bold text-slate-700 mb-1">مسمى المهنة:</label>
+                <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 mb-1">مسمى المهنة:</label>
                 <input
                   type="text"
                   value={formData.name || ''}
                   onChange={(e) => setFormData(p => ({ ...p, name: e.target.value }))}
                   placeholder="مثال: سائق خاص، سباك صحي..."
-                  className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-950/50"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-slate-700 mb-1">تصنيف المهنة:</label>
+                <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 mb-1">تصنيف المهنة:</label>
                 <select
                   value={formData.category || 'منزلية'}
                   onChange={(e) => setFormData(p => ({ ...p, category: e.target.value as any }))}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 font-bold"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-950/50 font-bold"
                 >
                   <option value="منزلية">عمالة منزلية (سائق، خادمة، طباخ، ممرض...)</option>
                   <option value="مهنية">عمالة مهنية وفنية (سباك، كهربائي، نجار، بناء...)</option>
@@ -238,23 +238,23 @@ export const ProfessionsView: React.FC<ProfessionsViewProps> = ({
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] font-bold text-slate-700 mb-1">الراتب الافتراضي:</label>
+                  <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 mb-1">الراتب الافتراضي:</label>
                   <input
                     type="number"
                     value={formData.default_salary || 0}
                     onChange={(e) => setFormData(p => ({ ...p, default_salary: Number(e.target.value) }))}
                     placeholder="1500"
-                    className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 font-mono font-bold"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-950/50 font-mono font-bold"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold text-slate-700 mb-1">العملة:</label>
+                  <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 mb-1">العملة:</label>
                   <select
                     value={formData.currency || 'SAR'}
                     onChange={(e) => setFormData(p => ({ ...p, currency: e.target.value }))}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 font-mono font-bold"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-950/50 font-mono font-bold"
                   >
                     {CURRENCIES.map(curr => (
                       <option key={curr} value={curr}>{curr}</option>
@@ -264,21 +264,21 @@ export const ProfessionsView: React.FC<ProfessionsViewProps> = ({
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-slate-700 mb-1">وصف المهنة وشروطها:</label>
+                <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 mb-1">وصف المهنة وشروطها:</label>
                 <textarea
                   value={formData.description || ''}
                   onChange={(e) => setFormData(p => ({ ...p, description: e.target.value }))}
                   placeholder="المهام، المؤهلات المطلوبة..."
                   rows={3}
-                  className="w-full p-2.5 rounded-xl border border-slate-300 bg-slate-50"
+                  className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-950/50"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-200">
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-200 dark:border-slate-700">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold"
+                  className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold"
                 >
                   إلغاء
                 </button>

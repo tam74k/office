@@ -27,6 +27,26 @@ import { OrderFormModal } from './components/OrderFormModal';
 import { Menu, UserPlus, PlusCircle } from 'lucide-react';
 
 export function App() {
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem('app-theme');
+    if (savedTheme) {
+      return savedTheme === 'dark';
+    }
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  });
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('app-theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('app-theme', 'light');
+    }
+  }, [isDarkMode]);
+
+  const toggleTheme = () => setIsDarkMode(prev => !prev);
+
   const [activeTab, setActiveTab] = useState<NavigationTab>('dashboard');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -184,7 +204,7 @@ export function App() {
   };
 
   return (
-    <div id="recruitment-app-root" className="min-h-screen bg-slate-100/90 text-slate-800 flex font-sans antialiased selection:bg-emerald-500 selection:text-white" dir="rtl">
+    <div id="recruitment-app-root" className="min-h-screen bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100 flex font-sans antialiased selection:bg-emerald-500 selection:text-white" dir="rtl">
       {/* Sidebar Navigation - Part of the standard document flow */}
       <Sidebar
         activeTab={activeTab}
@@ -193,6 +213,8 @@ export function App() {
           setPreOpenedOrder(null);
         }}
         isMobileOpen={isMobileMenuOpen}
+        isDarkMode={isDarkMode}
+        toggleTheme={toggleTheme}
         setIsMobileOpen={setIsMobileMenuOpen}
         officeProfile={officeProfile}
         ordersCount={orders.length}
@@ -204,11 +226,11 @@ export function App() {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden">
         {/* Mobile & Tablet Top Bar */}
-        <header className="lg:hidden bg-slate-900 text-white p-3 sm:p-4 flex items-center justify-between sticky top-0 z-30 shadow-md">
+        <header className="lg:hidden bg-slate-900 dark:bg-slate-950 text-white p-3 sm:p-4 flex items-center justify-between sticky top-0 z-30 shadow-md">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="p-2 text-slate-300 hover:text-white rounded-xl hover:bg-slate-800 focus:outline-hidden cursor-pointer"
+              className="p-2 text-slate-300 hover:text-white rounded-xl hover:bg-slate-800 dark:hover:bg-slate-800 dark:hover:bg-slate-800 focus:outline-hidden cursor-pointer"
               aria-label="فتح القائمة"
             >
               <Menu className="w-6 h-6" />
@@ -227,7 +249,7 @@ export function App() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => handleOpenNewClientModal(null)}
-              className="p-2 bg-slate-800 hover:bg-slate-700 text-emerald-400 rounded-xl text-xs font-bold border border-slate-700 transition-colors cursor-pointer"
+              className="p-2 bg-slate-800 dark:bg-slate-800 dark:bg-slate-800 hover:bg-slate-700 text-emerald-400 rounded-xl text-xs font-bold border border-slate-700 transition-colors cursor-pointer"
               title="إضافة عميل"
             >
               <UserPlus className="w-4 h-4" />

@@ -158,9 +158,9 @@ export const SupabaseSyncModal: React.FC<SupabaseSyncModalProps> = ({
       id="supabase-sync-modal"
       className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4"
     >
-      <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-slate-200 text-slate-800">
+      <div className="bg-white dark:bg-slate-900 dark:bg-slate-950 rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100">
         {/* Modal Header */}
-        <div className="bg-slate-900 text-white p-5 flex items-center justify-between sticky top-0 z-10">
+        <div className="bg-slate-900 dark:bg-slate-950 text-white p-5 flex items-center justify-between sticky top-0 z-10">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
               <Database className="w-4 h-4" />
@@ -172,26 +172,26 @@ export const SupabaseSyncModal: React.FC<SupabaseSyncModalProps> = ({
                   متصل
                 </span>
               </h3>
-              <p className="text-[10px] text-slate-400 font-mono mt-0.5">svnzxbdsgykpxwjijkcy.supabase.co</p>
+              <p className="text-[10px] text-slate-400 dark:text-slate-500 dark:text-slate-400 font-mono mt-0.5">svnzxbdsgykpxwjijkcy.supabase.co</p>
             </div>
           </div>
 
           <button
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800"
+            className="p-1.5 text-slate-400 dark:text-slate-500 dark:text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 dark:hover:bg-slate-800 dark:hover:bg-slate-800"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Sub Navigation Tabs */}
-        <div className="flex items-center gap-2 px-6 pt-4 border-b border-slate-100">
+        <div className="flex items-center gap-2 px-6 pt-4 border-b border-slate-100 dark:border-slate-800">
           <button
             onClick={() => setActiveTab('sync')}
             className={`pb-3 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-1.5 ${
               activeTab === 'sync'
                 ? 'border-emerald-600 text-emerald-700'
-                : 'border-transparent text-slate-500 hover:text-slate-900'
+                : 'border-transparent text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <RefreshCw className="w-3.5 h-3.5" />
@@ -203,7 +203,7 @@ export const SupabaseSyncModal: React.FC<SupabaseSyncModalProps> = ({
             className={`pb-3 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-1.5 ${
               activeTab === 'sql'
                 ? 'border-emerald-600 text-emerald-700'
-                : 'border-transparent text-slate-500 hover:text-slate-900'
+                : 'border-transparent text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <Terminal className="w-3.5 h-3.5" />
@@ -215,7 +215,7 @@ export const SupabaseSyncModal: React.FC<SupabaseSyncModalProps> = ({
             className={`pb-3 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-1.5 ${
               activeTab === 'config'
                 ? 'border-emerald-600 text-emerald-700'
-                : 'border-transparent text-slate-500 hover:text-slate-900'
+                : 'border-transparent text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <Key className="w-3.5 h-3.5" />
@@ -227,7 +227,7 @@ export const SupabaseSyncModal: React.FC<SupabaseSyncModalProps> = ({
         {statusMessage && (
           <div className="px-6 pt-4">
             <div className={`p-3.5 rounded-2xl border text-xs font-bold flex items-start gap-2.5 ${
-              statusMessage.type === 'success' ? 'bg-emerald-50 border-emerald-300 text-emerald-900' : 'bg-rose-50 border-rose-300 text-rose-900'
+              statusMessage.type === 'success' ? 'bg-emerald-50 dark:bg-emerald-900/30 border-emerald-300 text-emerald-900' : 'bg-rose-50 dark:bg-rose-900/30 border-rose-300 text-rose-900'
             }`}>
               {statusMessage.type === 'success' ? <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600 mt-0.5" /> : <AlertCircle className="w-4 h-4 shrink-0 text-rose-600 mt-0.5" />}
               <span className="leading-relaxed">{statusMessage.text}</span>
@@ -254,7 +254,7 @@ export const SupabaseSyncModal: React.FC<SupabaseSyncModalProps> = ({
                 href="https://supabase.com/dashboard/project/svnzxbdsgykpxwjijkcy/sql/new"
                 target="_blank"
                 rel="noreferrer"
-                className="px-3.5 py-1.5 bg-white/15 hover:bg-white/25 text-white rounded-xl font-bold flex items-center justify-center gap-1.5 transition-colors shrink-0 text-[11px]"
+                className="px-3.5 py-1.5 bg-white dark:bg-slate-900 dark:bg-slate-950/15 hover:bg-white dark:hover:bg-slate-900 dark:hover:bg-slate-950/25 text-white rounded-xl font-bold flex items-center justify-center gap-1.5 transition-colors shrink-0 text-[11px]"
               >
                 <span>فتح SQL Editor في Supabase</span>
                 <ExternalLink className="w-3.5 h-3.5" />
@@ -282,7 +282,7 @@ export const SupabaseSyncModal: React.FC<SupabaseSyncModalProps> = ({
                 type="button"
                 onClick={handlePullFromSupabase}
                 disabled={isSyncing}
-                className="p-4 bg-slate-900 hover:bg-slate-800 disabled:opacity-50 text-white rounded-2xl font-bold text-right flex flex-col justify-between transition-all shadow-md"
+                className="p-4 bg-slate-900 dark:bg-slate-950 hover:bg-slate-800 dark:hover:bg-slate-800 dark:hover:bg-slate-800 disabled:opacity-50 text-white rounded-2xl font-bold text-right flex flex-col justify-between transition-all shadow-md"
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm">جلب البيانات من السحابة (Pull)</span>
@@ -296,37 +296,37 @@ export const SupabaseSyncModal: React.FC<SupabaseSyncModalProps> = ({
 
             {/* Local Stats */}
             <div>
-              <h4 className="font-bold text-slate-900 text-xs mb-2.5">إحصائيات السجلات الجاهزة للمزامنة:</h4>
+              <h4 className="font-bold text-slate-900 dark:text-white text-xs mb-2.5">إحصائيات السجلات الجاهزة للمزامنة:</h4>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                  <span className="text-slate-500 text-[11px] block">العملاء (الكفلاء):</span>
-                  <span className="text-base font-bold text-slate-900 font-mono">{clients.length} عميل</span>
+                <div className="p-3 bg-slate-50 dark:bg-slate-950/50 rounded-xl border border-slate-200 dark:border-slate-700">
+                  <span className="text-slate-500 dark:text-slate-400 dark:text-slate-500 text-[11px] block">العملاء (الكفلاء):</span>
+                  <span className="text-base font-bold text-slate-900 dark:text-white font-mono">{clients.length} عميل</span>
                 </div>
-                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                  <span className="text-slate-500 text-[11px] block">عقود وطلبات الاستقدام:</span>
+                <div className="p-3 bg-slate-50 dark:bg-slate-950/50 rounded-xl border border-slate-200 dark:border-slate-700">
+                  <span className="text-slate-500 dark:text-slate-400 dark:text-slate-500 text-[11px] block">عقود وطلبات الاستقدام:</span>
                   <span className="text-base font-bold text-emerald-700 font-mono">{orders.length} طلب</span>
                 </div>
-                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                  <span className="text-slate-500 text-[11px] block">جدول الدول:</span>
-                  <span className="text-base font-bold text-slate-900 font-mono">{countries.length} دولة</span>
+                <div className="p-3 bg-slate-50 dark:bg-slate-950/50 rounded-xl border border-slate-200 dark:border-slate-700">
+                  <span className="text-slate-500 dark:text-slate-400 dark:text-slate-500 text-[11px] block">جدول الدول:</span>
+                  <span className="text-base font-bold text-slate-900 dark:text-white font-mono">{countries.length} دولة</span>
                 </div>
-                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                  <span className="text-slate-500 text-[11px] block">جدول المدن:</span>
-                  <span className="text-base font-bold text-slate-900 font-mono">{cities.length} مدينة</span>
+                <div className="p-3 bg-slate-50 dark:bg-slate-950/50 rounded-xl border border-slate-200 dark:border-slate-700">
+                  <span className="text-slate-500 dark:text-slate-400 dark:text-slate-500 text-[11px] block">جدول المدن:</span>
+                  <span className="text-base font-bold text-slate-900 dark:text-white font-mono">{cities.length} مدينة</span>
                 </div>
-                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                  <span className="text-slate-500 text-[11px] block">جدول المهن والأجور:</span>
-                  <span className="text-base font-bold text-slate-900 font-mono">{professions.length} مهنة</span>
+                <div className="p-3 bg-slate-50 dark:bg-slate-950/50 rounded-xl border border-slate-200 dark:border-slate-700">
+                  <span className="text-slate-500 dark:text-slate-400 dark:text-slate-500 text-[11px] block">جدول المهن والأجور:</span>
+                  <span className="text-base font-bold text-slate-900 dark:text-white font-mono">{professions.length} مهنة</span>
                 </div>
-                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                  <span className="text-slate-500 text-[11px] block">قوالب رسائل الواتساب:</span>
-                  <span className="text-base font-bold text-slate-900 font-mono">{whatsAppTemplates.length} قالب</span>
+                <div className="p-3 bg-slate-50 dark:bg-slate-950/50 rounded-xl border border-slate-200 dark:border-slate-700">
+                  <span className="text-slate-500 dark:text-slate-400 dark:text-slate-500 text-[11px] block">قوالب رسائل الواتساب:</span>
+                  <span className="text-base font-bold text-slate-900 dark:text-white font-mono">{whatsAppTemplates.length} قالب</span>
                 </div>
               </div>
             </div>
 
-            <div className="pt-3 border-t border-slate-200 flex justify-between items-center">
-              <span className="text-[11px] text-slate-400">
+            <div className="pt-3 border-t border-slate-200 dark:border-slate-700 flex justify-between items-center">
+              <span className="text-[11px] text-slate-400 dark:text-slate-500 dark:text-slate-400">
                 آخر فحص: {currentConfig.last_sync ? new Date(currentConfig.last_sync).toLocaleTimeString('ar-SA') : 'الآن'}
               </span>
               <button
@@ -347,7 +347,7 @@ export const SupabaseSyncModal: React.FC<SupabaseSyncModalProps> = ({
         {activeTab === 'sql' && (
           <div className="p-6 space-y-4 text-xs">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <p className="text-slate-600 text-[11px]">
+              <p className="text-slate-600 dark:text-slate-300 text-[11px]">
                 إذا كنت تنشئ الجداول لأول مرة، انسخ هذا الكود والصقه في <strong>Supabase SQL Editor</strong>:
               </p>
               <div className="flex items-center gap-2">
@@ -355,7 +355,7 @@ export const SupabaseSyncModal: React.FC<SupabaseSyncModalProps> = ({
                   href="https://supabase.com/dashboard/project/svnzxbdsgykpxwjijkcy/sql/new"
                   target="_blank"
                   rel="noreferrer"
-                  className="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold flex items-center gap-1 shadow-xs shrink-0 text-xs"
+                  className="px-3 py-1.5 bg-slate-900 dark:bg-slate-950 hover:bg-slate-800 dark:hover:bg-slate-800 dark:hover:bg-slate-800 text-white rounded-xl font-bold flex items-center gap-1 shadow-xs shrink-0 text-xs"
                 >
                   <span>فتح SQL Editor</span>
                   <ExternalLink className="w-3 h-3" />
@@ -380,7 +380,7 @@ export const SupabaseSyncModal: React.FC<SupabaseSyncModalProps> = ({
         {activeTab === 'config' && (
           <div className="p-6 space-y-4 text-xs">
             <div>
-              <label className="block text-[11px] font-bold text-slate-700 mb-1">
+              <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 mb-1">
                 رابط مشروع Supabase (Project URL):
               </label>
               <input
@@ -388,12 +388,12 @@ export const SupabaseSyncModal: React.FC<SupabaseSyncModalProps> = ({
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 placeholder="https://your-project.supabase.co"
-                className="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white font-mono text-xs dir-ltr text-right"
+                className="w-full px-3 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-950/50 focus:bg-white dark:focus:bg-slate-950 font-mono text-xs dir-ltr text-right"
               />
             </div>
 
             <div>
-              <label className="block text-[11px] font-bold text-slate-700 mb-1">
+              <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 mb-1">
                 المفتاح العام (Project API Anon / Publishable Key):
               </label>
               <input
@@ -401,16 +401,16 @@ export const SupabaseSyncModal: React.FC<SupabaseSyncModalProps> = ({
                 value={key}
                 onChange={(e) => setKey(e.target.value)}
                 placeholder="sb_publishable_..."
-                className="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white font-mono text-xs dir-ltr text-right"
+                className="w-full px-3 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-950/50 focus:bg-white dark:focus:bg-slate-950 font-mono text-xs dir-ltr text-right"
               />
             </div>
 
-            <div className="pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2">
+            <div className="pt-3 border-t border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-2">
               <button
                 type="button"
                 onClick={handleTestConnection}
                 disabled={isTesting}
-                className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-bold flex items-center gap-1.5 transition-colors"
+                className="px-4 py-2 bg-slate-800 dark:bg-slate-800 dark:bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-bold flex items-center gap-1.5 transition-colors"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isTesting ? 'animate-spin' : ''}`} />
                 <span>{isTesting ? 'جاري فحص الاتصال...' : 'اختبار الاتصال'}</span>

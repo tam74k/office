@@ -81,26 +81,26 @@ export const ProfessionAutocomplete: React.FC<ProfessionAutocompleteProps> = ({
             setIsOpen(true);
           }}
           placeholder={placeholder}
-          className="w-full pl-8 pr-8 py-2 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
+          className="w-full pl-8 pr-8 py-2 bg-white dark:bg-slate-900 dark:bg-slate-950 border border-slate-300 dark:border-slate-600 rounded-lg text-xs font-semibold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
         />
-        <Briefcase className="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-2.5 pointer-events-none" />
+        <Briefcase className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 dark:text-slate-400 absolute right-2.5 top-2.5 pointer-events-none" />
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="absolute left-2 top-2 p-0.5 text-slate-400 hover:text-slate-600 rounded transition-colors cursor-pointer"
+          className="absolute left-2 top-2 p-0.5 text-slate-400 dark:text-slate-500 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 rounded transition-colors cursor-pointer"
         >
           <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isOpen ? 'rotate-180 text-emerald-600' : ''}`} />
         </button>
       </div>
 
       {isOpen && (
-        <div className="absolute top-full right-0 left-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-xl z-50 max-h-52 overflow-y-auto divide-y divide-slate-100 animate-in fade-in zoom-in-95 duration-100">
+        <div className="absolute top-full right-0 left-0 mt-1 bg-white dark:bg-slate-900 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl z-50 max-h-52 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-800 animate-in fade-in zoom-in-95 duration-100">
           {allowAll && (
             <button
               type="button"
               onClick={() => handleSelect(null)}
               className={`w-full text-right px-3 py-2 flex items-center justify-between text-xs transition-colors cursor-pointer ${
-                (!selectedId || selectedId === 'الكل') ? 'bg-emerald-50 text-emerald-900 font-bold' : 'hover:bg-slate-50 text-slate-700'
+                (!selectedId || selectedId === 'الكل') ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-900 font-bold' : 'hover:bg-slate-50 dark:hover:bg-slate-900 dark:hover:bg-slate-950/50 text-slate-700 dark:text-slate-200'
               }`}
             >
               <div className="font-bold">جميع المهن</div>
@@ -116,19 +116,19 @@ export const ProfessionAutocomplete: React.FC<ProfessionAutocompleteProps> = ({
                   type="button"
                   onClick={() => handleSelect(p)}
                   className={`w-full text-right px-3 py-2 flex items-center justify-between text-xs transition-colors cursor-pointer ${
-                    isSelected ? 'bg-emerald-50 text-emerald-900 font-bold' : 'hover:bg-slate-50 text-slate-700'
+                    isSelected ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-900 font-bold' : 'hover:bg-slate-50 dark:hover:bg-slate-900 dark:hover:bg-slate-950/50 text-slate-700 dark:text-slate-200'
                   }`}
                 >
                   <div className="flex items-center gap-2">
                     <span className="font-bold">{p.name}</span>
                     <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${
-                      p.category === 'منزلية' ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800'
+                      p.category === 'منزلية' ? 'bg-amber-100 dark:bg-amber-900/50 text-amber-800' : 'bg-blue-100 dark:bg-blue-900/50 text-blue-800'
                     }`}>
                       {p.category}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[11px] text-slate-400 font-mono">
+                    <span className="text-[11px] text-slate-400 dark:text-slate-500 dark:text-slate-400 font-mono">
                       الراتب: {p.default_salary} {p.currency || 'SAR'}
                     </span>
                     {isSelected && <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />}
@@ -137,7 +137,7 @@ export const ProfessionAutocomplete: React.FC<ProfessionAutocompleteProps> = ({
               );
             })
           ) : (
-            <div className="p-3 text-center text-xs text-slate-500">
+            <div className="p-3 text-center text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">
               لا توجد مهنة مطابقة لكلمة البحث "{query}"
             </div>
           )}
@@ -235,26 +235,26 @@ export const CountryAutocomplete: React.FC<CountryAutocompleteProps> = ({
             setIsOpen(true);
           }}
           placeholder={placeholder}
-          className="w-full pl-8 pr-8 py-2 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
+          className="w-full pl-8 pr-8 py-2 bg-white dark:bg-slate-900 dark:bg-slate-950 border border-slate-300 dark:border-slate-600 rounded-lg text-xs font-semibold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
         />
-        <Globe className="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-2.5 pointer-events-none" />
+        <Globe className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 dark:text-slate-400 absolute right-2.5 top-2.5 pointer-events-none" />
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="absolute left-2 top-2 p-0.5 text-slate-400 hover:text-slate-600 rounded transition-colors cursor-pointer"
+          className="absolute left-2 top-2 p-0.5 text-slate-400 dark:text-slate-500 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 rounded transition-colors cursor-pointer"
         >
           <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isOpen ? 'rotate-180 text-emerald-600' : ''}`} />
         </button>
       </div>
 
       {isOpen && (
-        <div className="absolute top-full right-0 left-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-xl z-50 max-h-52 overflow-y-auto divide-y divide-slate-100 animate-in fade-in zoom-in-95 duration-100">
+        <div className="absolute top-full right-0 left-0 mt-1 bg-white dark:bg-slate-900 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl z-50 max-h-52 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-800 animate-in fade-in zoom-in-95 duration-100">
           {allowAll && (
             <button
               type="button"
               onClick={() => handleSelect(null)}
               className={`w-full text-right px-3 py-2 flex items-center justify-between text-xs transition-colors cursor-pointer ${
-                (!selectedId || selectedId === 'الكل') ? 'bg-emerald-50 text-emerald-900 font-bold' : 'hover:bg-slate-50 text-slate-700'
+                (!selectedId || selectedId === 'الكل') ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-900 font-bold' : 'hover:bg-slate-50 dark:hover:bg-slate-900 dark:hover:bg-slate-950/50 text-slate-700 dark:text-slate-200'
               }`}
             >
               <div className="font-bold">جميع الدول</div>
@@ -270,16 +270,16 @@ export const CountryAutocomplete: React.FC<CountryAutocompleteProps> = ({
                   type="button"
                   onClick={() => handleSelect(c)}
                   className={`w-full text-right px-3 py-2 flex items-center justify-between text-xs transition-colors cursor-pointer ${
-                    isSelected ? 'bg-emerald-50 text-emerald-900 font-bold' : 'hover:bg-slate-50 text-slate-700'
+                    isSelected ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-900 font-bold' : 'hover:bg-slate-50 dark:hover:bg-slate-900 dark:hover:bg-slate-950/50 text-slate-700 dark:text-slate-200'
                   }`}
                 >
                   <div className="flex items-center gap-2">
                     <span className="text-base leading-none">{c.flag_emoji}</span>
                     <span className="font-bold">{c.name}</span>
-                    <span className="text-[10px] text-slate-400 uppercase font-mono">({c.code})</span>
+                    <span className="text-[10px] text-slate-400 dark:text-slate-500 dark:text-slate-400 uppercase font-mono">({c.code})</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[11px] text-slate-400 font-mono" dir="ltr">
+                    <span className="text-[11px] text-slate-400 dark:text-slate-500 dark:text-slate-400 font-mono" dir="ltr">
                       {c.phone_code}
                     </span>
                     {isSelected && <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />}
@@ -288,7 +288,7 @@ export const CountryAutocomplete: React.FC<CountryAutocompleteProps> = ({
               );
             })
           ) : (
-            <div className="p-3 text-center text-xs text-slate-500">
+            <div className="p-3 text-center text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">
               لا توجد دولة مطابقة لكلمة البحث "{query}"
             </div>
           )}
@@ -377,26 +377,26 @@ export const ClientAutocomplete: React.FC<ClientAutocompleteProps> = ({
             setIsOpen(true);
           }}
           placeholder={placeholder}
-          className="w-full pl-8 pr-8 py-2 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-800 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
+          className="w-full pl-8 pr-8 py-2 bg-white dark:bg-slate-900 dark:bg-slate-950 border border-slate-300 dark:border-slate-600 rounded-lg text-xs font-semibold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
         />
-        <Search className="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-2.5 pointer-events-none" />
+        <Search className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 dark:text-slate-400 absolute right-2.5 top-2.5 pointer-events-none" />
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="absolute left-2 top-2 p-0.5 text-slate-400 hover:text-slate-600 rounded transition-colors cursor-pointer"
+          className="absolute left-2 top-2 p-0.5 text-slate-400 dark:text-slate-500 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 rounded transition-colors cursor-pointer"
         >
           <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isOpen ? 'rotate-180 text-emerald-600' : ''}`} />
         </button>
       </div>
 
       {isOpen && (
-        <div className="absolute top-full right-0 left-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-xl z-50 max-h-52 overflow-y-auto divide-y divide-slate-100 animate-in fade-in zoom-in-95 duration-100">
+        <div className="absolute top-full right-0 left-0 mt-1 bg-white dark:bg-slate-900 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl z-50 max-h-52 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-800 animate-in fade-in zoom-in-95 duration-100">
           {allowAll && (
             <button
               type="button"
               onClick={() => handleSelect(null)}
               className={`w-full text-right px-3 py-2 flex items-center justify-between text-xs transition-colors cursor-pointer ${
-                (!selectedId || selectedId === 'الكل') ? 'bg-emerald-50 text-emerald-900 font-bold' : 'hover:bg-slate-50 text-slate-700'
+                (!selectedId || selectedId === 'الكل') ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-900 font-bold' : 'hover:bg-slate-50 dark:hover:bg-slate-900 dark:hover:bg-slate-950/50 text-slate-700 dark:text-slate-200'
               }`}
             >
               <div className="font-bold">الكل</div>
@@ -412,19 +412,19 @@ export const ClientAutocomplete: React.FC<ClientAutocompleteProps> = ({
                   type="button"
                   onClick={() => handleSelect(c)}
                   className={`w-full text-right px-3 py-2 flex items-center justify-between text-xs transition-colors cursor-pointer ${
-                    isSelected ? 'bg-emerald-50 text-emerald-900 font-bold' : 'hover:bg-slate-50 text-slate-700'
+                    isSelected ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-900 font-bold' : 'hover:bg-slate-50 dark:hover:bg-slate-900 dark:hover:bg-slate-950/50 text-slate-700 dark:text-slate-200'
                   }`}
                 >
                   <div className="flex flex-col gap-0.5">
                     <span className="font-bold">{c.name}</span>
-                    <span className="text-[10px] text-slate-500 font-mono">{c.national_id} | {c.full_mobile || c.mobile}</span>
+                    <span className="text-[10px] text-slate-500 dark:text-slate-400 dark:text-slate-500 font-mono">{c.national_id} | {c.full_mobile || c.mobile}</span>
                   </div>
                   {isSelected && <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />}
                 </button>
               );
             })
           ) : (
-            <div className="p-3 text-center text-xs text-slate-500">
+            <div className="p-3 text-center text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">
               لا يوجد عميل مطابق لكلمة البحث "{query}"
             </div>
           )}

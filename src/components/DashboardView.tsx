@@ -65,12 +65,12 @@ export interface DashboardViewProps {
 }
 
 const STATUS_COLORS: Record<OrderStatus, { bg: string; text: string; border: string; barColor: string }> = {
-  'جديد': { bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200', barColor: '#3b82f6' },
-  'تم الاختيار': { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200', barColor: '#f59e0b' },
+  'جديد': { bg: 'bg-blue-50 dark:bg-blue-900/30', text: 'text-blue-700', border: 'border-blue-200', barColor: '#3b82f6' },
+  'تم الاختيار': { bg: 'bg-amber-50 dark:bg-amber-900/30', text: 'text-amber-700', border: 'border-amber-200', barColor: '#f59e0b' },
   'كشف طبي': { bg: 'bg-purple-50', text: 'text-purple-700', border: 'border-purple-200', barColor: '#a855f7' },
-  'تم التفييز': { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200', barColor: '#10b981' },
+  'تم التفييز': { bg: 'bg-emerald-50 dark:bg-emerald-900/30', text: 'text-emerald-700', border: 'border-emerald-200', barColor: '#10b981' },
   'تم السفر': { bg: 'bg-teal-50', text: 'text-teal-700', border: 'border-teal-200', barColor: '#0d9488' },
-  'ملغي': { bg: 'bg-slate-50', text: 'text-slate-700', border: 'border-slate-200', barColor: '#64748b' }
+  'ملغي': { bg: 'bg-slate-50 dark:bg-slate-950/50', text: 'text-slate-700 dark:text-slate-200', border: 'border-slate-200 dark:border-slate-700', barColor: '#64748b' }
 };
 
 const CHART_PALETTE = ['#10b981', '#3b82f6', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4', '#f97316', '#14b8a6'];
@@ -360,7 +360,7 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
           <button
             id="btn-quick-new-client"
             onClick={handleAddNewClient}
-            className="flex items-center gap-1.5 px-3.5 py-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold transition-all border border-slate-700 shadow-sm"
+            className="flex items-center gap-1.5 px-3.5 py-2.5 bg-slate-800 dark:bg-slate-800 dark:bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold transition-all border border-slate-700 shadow-sm"
           >
             <Users className="w-4 h-4 text-emerald-400" />
             <span>+ عميل جديد</span>
@@ -379,22 +379,22 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
       {/* Key Metrics Overview Cards (Clients, Orders & Breakdown by Status) */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
         {/* Total Clients */}
-        <div id="stat-total-clients" className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs hover:border-emerald-300 transition-all">
-          <div className="flex items-center justify-between text-slate-400 mb-2">
-            <span className="text-xs font-bold text-slate-600">إجمالي العملاء</span>
-            <div className="p-2 rounded-xl bg-slate-100 text-slate-700">
+        <div id="stat-total-clients" className="bg-white dark:bg-slate-900 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs hover:border-emerald-300 transition-all">
+          <div className="flex items-center justify-between text-slate-400 dark:text-slate-500 dark:text-slate-400 mb-2">
+            <span className="text-xs font-bold text-slate-600 dark:text-slate-300">إجمالي العملاء</span>
+            <div className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
               <Users className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-2xl font-black text-slate-900 font-mono">{clients.length}</div>
-          <div className="text-[11px] text-slate-500 mt-1">كفيل مسجل بالنظام</div>
+          <div className="text-2xl font-black text-slate-900 dark:text-white font-mono">{clients.length}</div>
+          <div className="text-[11px] text-slate-500 dark:text-slate-400 dark:text-slate-500 mt-1">كفيل مسجل بالنظام</div>
         </div>
 
         {/* Total Orders */}
-        <div id="stat-total-orders" className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs hover:border-emerald-300 transition-all">
-          <div className="flex items-center justify-between text-slate-400 mb-2">
-            <span className="text-xs font-bold text-slate-600">عدد الطلبات</span>
-            <div className="p-2 rounded-xl bg-emerald-100 text-emerald-700">
+        <div id="stat-total-orders" className="bg-white dark:bg-slate-900 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs hover:border-emerald-300 transition-all">
+          <div className="flex items-center justify-between text-slate-400 dark:text-slate-500 dark:text-slate-400 mb-2">
+            <span className="text-xs font-bold text-slate-600 dark:text-slate-300">عدد الطلبات</span>
+            <div className="p-2 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700">
               <FileText className="w-4 h-4" />
             </div>
           </div>
@@ -403,7 +403,7 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
         </div>
 
         {/* Status: جديد */}
-        <div id="stat-status-new" className="bg-blue-50/50 p-4 rounded-2xl border border-blue-200/80 shadow-xs">
+        <div id="stat-status-new" className="bg-blue-50 dark:bg-blue-900/50 p-4 rounded-2xl border border-blue-200/80 shadow-xs">
           <div className="flex items-center justify-between text-blue-600 mb-2">
             <span className="text-xs font-bold text-blue-900">جديد</span>
             <Clock className="w-4 h-4" />
@@ -413,7 +413,7 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
         </div>
 
         {/* Status: تم الاختيار */}
-        <div id="stat-status-selected" className="bg-amber-50/50 p-4 rounded-2xl border border-amber-200/80 shadow-xs">
+        <div id="stat-status-selected" className="bg-amber-50 dark:bg-amber-900/50 p-4 rounded-2xl border border-amber-200/80 shadow-xs">
           <div className="flex items-center justify-between text-amber-600 mb-2">
             <span className="text-xs font-bold text-amber-900">تم الاختيار</span>
             <UserCheck className="w-4 h-4" />
@@ -433,7 +433,7 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
         </div>
 
         {/* Status: تم التفييز */}
-        <div id="stat-status-visa" className="bg-emerald-50/60 p-4 rounded-2xl border border-emerald-200/80 shadow-xs">
+        <div id="stat-status-visa" className="bg-emerald-50 dark:bg-emerald-900/30/60 p-4 rounded-2xl border border-emerald-200/80 shadow-xs">
           <div className="flex items-center justify-between text-emerald-600 mb-2">
             <span className="text-xs font-bold text-emerald-900">تم التفييز</span>
             <Stamp className="w-4 h-4" />
@@ -454,15 +454,15 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
       </div>
 
       {/* Interactive Sponsor Countries Quick Bar (دول الكفلاء مع الأعلام) */}
-      <div id="sponsor-countries-section" className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+      <div id="sponsor-countries-section" className="bg-white dark:bg-slate-900 dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
           <div className="flex items-center gap-2">
             <Globe2 className="w-5 h-5 text-emerald-600" />
-            <h3 className="font-bold text-sm text-slate-900">
+            <h3 className="font-bold text-sm text-slate-900 dark:text-white">
               دول الكفلاء (اضغط لعرض الطلبات الخاصة بهذه الدولة مباشرة):
             </h3>
           </div>
-          <span className="text-xs text-slate-500">تصفية فورية بناءً على دولة العميل</span>
+          <span className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">تصفية فورية بناءً على دولة العميل</span>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
@@ -471,8 +471,8 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
             onClick={() => setSelectedSponsorCountry('الكل')}
             className={`p-3.5 rounded-xl border flex flex-col items-center justify-center gap-1.5 transition-all text-center ${
               selectedSponsorCountry === 'الكل'
-                ? 'bg-slate-900 text-white border-slate-900 shadow-md ring-2 ring-emerald-500/30'
-                : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
+                ? 'bg-slate-900 dark:bg-slate-950 text-white border-slate-900 shadow-md ring-2 ring-emerald-500/30'
+                : 'bg-slate-50 dark:bg-slate-950/50 hover:bg-slate-100 dark:hover:bg-slate-800 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700'
             }`}
           >
             <span className="text-2xl">🌍</span>
@@ -490,13 +490,13 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
                 key={sc.id}
                 id={`sponsor-btn-${sc.code.toLowerCase()}`}
                 onClick={() => setSelectedCountryForModal(sc.name)}
-                className={`p-3.5 rounded-xl border flex flex-col items-center justify-center gap-1.5 transition-all text-center bg-slate-50 hover:bg-emerald-50 text-slate-800 border-slate-200`}
+                className={`p-3.5 rounded-xl border flex flex-col items-center justify-center gap-1.5 transition-all text-center bg-slate-50 dark:bg-slate-950/50 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 text-slate-800 dark:text-slate-100 border-slate-200 dark:border-slate-700`}
               >
                 <span className="text-3xl leading-none">{sc.flag_emoji}</span>
                 <span className="font-bold text-xs truncate max-w-full">
                   {sc.name.replace('المملكة العربية السعودية', 'السعودية').replace('الإمارات العربية المتحدة', 'الإمارات').replace('دولة ', '').replace('مملكة ', '')}
                 </span>
-                <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-semibold bg-slate-200/70 text-slate-700`}>
+                <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-semibold bg-slate-200 dark:bg-slate-700/70 text-slate-700 dark:text-slate-200`}>
                   {countryOrdersCount} طلب
                 </span>
               </button>
@@ -508,7 +508,7 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
       {/* Orders View Modal for Selected Country */}
       {selectedCountryForModal && (
         <div className="fixed inset-0 z-[60] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4">
-          <div className="bg-slate-50 w-full max-w-7xl h-[95vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col">
+          <div className="bg-slate-50 dark:bg-slate-950/50 w-full max-w-7xl h-[95vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col">
             <div className="overflow-y-auto p-4 sm:p-6 w-full flex-1">
               <OrdersView
                 orders={orders.filter(o => o.sponsor_country_name === selectedCountryForModal)}
@@ -531,18 +531,18 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
       )}
 
       {/* Advanced Multi-Filters Box with Autocomplete and Flexible Search */}
-      <div id="advanced-filters-panel" className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-4">
-        <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+      <div id="advanced-filters-panel" className="bg-white dark:bg-slate-900 dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs space-y-4">
+        <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
           <div className="flex items-center gap-2">
             <Filter className="w-4 h-4 text-emerald-600" />
-            <h4 className="font-bold text-sm text-slate-900">
+            <h4 className="font-bold text-sm text-slate-900 dark:text-white">
               الفلاتر المتقدمة (بحث ذكي بالإكمال التلقائي وتصفية متعددة في آن واحد)
             </h4>
           </div>
           <button
             id="btn-reset-dashboard-filters"
             onClick={handleResetFilters}
-            className="flex items-center gap-1 text-xs text-rose-600 hover:text-rose-700 font-semibold px-2.5 py-1 rounded-lg hover:bg-rose-50 transition-colors"
+            className="flex items-center gap-1 text-xs text-rose-600 hover:text-rose-700 font-semibold px-2.5 py-1 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-900/30 transition-colors"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             <span>إعادة تعيين الفلاتر</span>
@@ -553,7 +553,7 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
           {/* 1. Client Name with Autocomplete */}
           <div className="relative">
-            <label className="block text-[11px] font-bold text-slate-600 mb-1">العميل:</label>
+            <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1">العميل:</label>
             <div className="relative">
               <ClientAutocomplete
                 clients={clients.filter(c => !c.is_archived)}
@@ -567,20 +567,20 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
 
           {/* 2. Mobile Phone */}
           <div>
-            <label className="block text-[11px] font-bold text-slate-600 mb-1">رقم الجوال:</label>
+            <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1">رقم الجوال:</label>
             <input
               id="filter-mobile"
               type="text"
               value={mobileQuery}
               onChange={(e) => setMobileQuery(e.target.value)}
               placeholder="مثال: 50123..."
-              className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none bg-slate-50 font-mono dir-ltr text-right"
+              className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-600 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none bg-slate-50 dark:bg-slate-950/50 font-mono dir-ltr text-right"
             />
           </div>
 
           {/* 3. Worker Country */}
           <div className="relative">
-            <label className="block text-[11px] font-bold text-slate-600 mb-1">دولة الاستقدام (العامل):</label>
+            <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1">دولة الاستقدام (العامل):</label>
             <div className="relative">
               <CountryAutocomplete
                 countries={countries}
@@ -595,7 +595,7 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
 
           {/* 4. Profession */}
           <div className="relative">
-            <label className="block text-[11px] font-bold text-slate-600 mb-1">المهنة المطلوبة:</label>
+            <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1">المهنة المطلوبة:</label>
             <div className="relative">
               <ProfessionAutocomplete
                 professions={professions}
@@ -609,12 +609,12 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
 
           {/* 5. Order Status */}
           <div>
-            <label className="block text-[11px] font-bold text-slate-600 mb-1">حالة الطلب:</label>
+            <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1">حالة الطلب:</label>
             <select
               id="filter-status"
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
-              className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none bg-slate-50"
+              className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-600 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none bg-slate-50 dark:bg-slate-950/50"
             >
               <option value="الكل">الكل</option>
               <option value="جديد">جديد</option>
@@ -627,33 +627,33 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
           {/* 6. Date Range */}
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <label className="block text-[11px] font-bold text-slate-600 mb-1">من تاريخ:</label>
+              <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1">من تاريخ:</label>
               <input
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="w-full px-2 py-2 text-[10px] rounded-xl border border-slate-300 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none bg-slate-50 font-mono"
+                className="w-full px-2 py-2 text-[10px] rounded-xl border border-slate-300 dark:border-slate-600 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none bg-slate-50 dark:bg-slate-950/50 font-mono"
               />
             </div>
             <div>
-              <label className="block text-[11px] font-bold text-slate-600 mb-1">إلى تاريخ:</label>
+              <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1">إلى تاريخ:</label>
               <input
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className="w-full px-2 py-2 text-[10px] rounded-xl border border-slate-300 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none bg-slate-50 font-mono"
+                className="w-full px-2 py-2 text-[10px] rounded-xl border border-slate-300 dark:border-slate-600 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none bg-slate-50 dark:bg-slate-950/50 font-mono"
               />
             </div>
           </div>
         </div>
 
         {/* Results status banner */}
-        <div className="flex items-center justify-between text-xs text-slate-500 pt-1">
+        <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 pt-1">
           <span>
             نتائج البحث المطابقة: <strong className="text-emerald-700 font-bold">{filteredOrders.length}</strong> من أصل {orders.length} طلب
           </span>
           {(selectedClientId || mobileQuery || selectedWorkerCountryId || selectedProfessionId || selectedStatus !== 'الكل' || selectedSponsorCountry !== 'الكل' || startDate || endDate) && (
-            <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md font-medium text-[11px]">
+            <span className="text-emerald-700 bg-emerald-50 dark:bg-emerald-900/30 px-2 py-0.5 rounded-md font-medium text-[11px]">
               الفلاتر نشطة ومطبقة الآن
             </span>
           )}
@@ -661,25 +661,25 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
       </div>
 
       {/* Filtered Orders Table Section (Directly Below Filters) */}
-      <div id="filtered-orders-table-wrapper" className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
-        <div className="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/50">
+      <div id="filtered-orders-table-wrapper" className="bg-white dark:bg-slate-900 dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs overflow-hidden">
+        <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50 dark:bg-slate-900/50 dark:bg-slate-900 dark:bg-slate-950/30">
           <div>
-            <h3 className="font-bold text-base text-slate-900 flex items-center gap-2">
+            <h3 className="font-bold text-base text-slate-900 dark:text-white flex items-center gap-2">
               <span>قائمة الطلبات المصفاة</span>
-              <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold font-mono">
+              <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 text-xs font-bold font-mono">
                 {filteredOrders.length}
               </span>
             </h3>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 mt-0.5">
               عرض الطلبات مع زر واتساب مباشر والطباعة وتفاصيل العمالة المستقدمة
             </p>
           </div>
         </div>
 
         {filteredOrders.length === 0 ? (
-          <div className="p-12 text-center text-slate-400 space-y-3">
+          <div className="p-12 text-center text-slate-400 dark:text-slate-500 dark:text-slate-400 space-y-3">
             <FileText className="w-12 h-12 mx-auto text-slate-300 stroke-1" />
-            <p className="text-sm font-medium text-slate-600">لا توجد طلبات مطابقة للفلاتر المحددة</p>
+            <p className="text-sm font-medium text-slate-600 dark:text-slate-300">لا توجد طلبات مطابقة للفلاتر المحددة</p>
             <button
               onClick={handleResetFilters}
               className="text-xs text-emerald-600 font-bold hover:underline inline-block cursor-pointer"
@@ -690,7 +690,7 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-right text-xs">
-              <thead className="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+              <thead className="bg-slate-100 dark:bg-slate-800 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold border-b border-slate-200 dark:border-slate-700">
                 <tr>
                   <th className="p-3.5">رقم الطلب والتاريخ</th>
                   <th className="p-3.5">العميل (الكفيل)</th>
@@ -701,31 +701,31 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
                   <th className="p-3.5 text-center">إجراءات سريعة</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                 {filteredOrders.map(order => {
                   const statusStyle = STATUS_COLORS[order.status] || STATUS_COLORS['جديد'];
                   return (
-                    <tr key={order.id} className="hover:bg-slate-50/80 transition-colors">
+                    <tr key={order.id} className="hover:bg-slate-50 dark:hover:bg-slate-900 dark:hover:bg-slate-950/80 transition-colors">
                       {/* Order Number & Date */}
                       <td className="p-3.5 font-mono">
-                        <div className="font-bold text-slate-900">{order.order_number}</div>
-                        <div className="text-[11px] text-slate-500 flex items-center gap-1 mt-0.5">
+                        <div className="font-bold text-slate-900 dark:text-white">{order.order_number}</div>
+                        <div className="text-[11px] text-slate-500 dark:text-slate-400 dark:text-slate-500 flex items-center gap-1 mt-0.5">
                           <Calendar className="w-3 h-3" /> {formatDate(order.contract_date || order.created_at)}
                         </div>
                       </td>
 
                       {/* Client Info */}
                       <td className="p-3.5">
-                        <div className="font-bold text-slate-900">{order.client_name}</div>
-                        <div className="text-[11px] font-mono text-slate-500 dir-ltr text-right">
+                        <div className="font-bold text-slate-900 dark:text-white">{order.client_name}</div>
+                        <div className="text-[11px] font-mono text-slate-500 dark:text-slate-400 dark:text-slate-500 dir-ltr text-right">
                           {order.client_mobile}
                         </div>
                       </td>
 
                       {/* Sponsor Location */}
                       <td className="p-3.5">
-                        <div className="font-medium text-slate-800">{order.sponsor_country_name}</div>
-                        <div className="text-[11px] text-slate-500">{order.city_name}</div>
+                        <div className="font-medium text-slate-800 dark:text-slate-100">{order.sponsor_country_name}</div>
+                        <div className="text-[11px] text-slate-500 dark:text-slate-400 dark:text-slate-500">{order.city_name}</div>
                       </td>
 
                       {/* Detailed Worker Items with Individual Status and WhatsApp */}
@@ -740,19 +740,19 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
                                 key={item.id || idx}
                                 className={`p-2 rounded-xl border transition-all text-[11px] ${
                                   isSelectedStatusMatch
-                                    ? 'bg-emerald-50/90 border-emerald-300 ring-2 ring-emerald-500/20'
-                                    : 'bg-slate-50/90 border-slate-200'
+                                    ? 'bg-emerald-50 dark:bg-emerald-900/30/90 border-emerald-300 ring-2 ring-emerald-500/20'
+                                    : 'bg-slate-50 dark:bg-slate-950/50/90 border-slate-200 dark:border-slate-700'
                                 }`}
                               >
                                 <div className="flex items-center justify-between gap-1.5 mb-1.5">
                                   <div className="flex items-center gap-1.5">
-                                    <span className="w-4 h-4 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-[9px]">
+                                    <span className="w-4 h-4 rounded-full bg-slate-800 dark:bg-slate-800 dark:bg-slate-800 text-white flex items-center justify-center font-bold text-[9px]">
                                       {idx + 1}
                                     </span>
-                                    <span className="font-bold text-slate-900 text-xs">{item.profession_name}</span>
-                                    <span className="text-slate-400 text-[10px]">من</span>
+                                    <span className="font-bold text-slate-900 dark:text-white text-xs">{item.profession_name}</span>
+                                    <span className="text-slate-400 dark:text-slate-500 dark:text-slate-400 text-[10px]">من</span>
                                     <span className="font-semibold text-emerald-700 text-xs">{item.worker_country_name}</span>
-                                    <span className="text-slate-400 text-[10px]">({item.experience_type})</span>
+                                    <span className="text-slate-400 dark:text-slate-500 dark:text-slate-400 text-[10px]">({item.experience_type})</span>
                                   </div>
 
                                   {/* Send WhatsApp specifically for this worker item */}
@@ -767,14 +767,14 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
                                   </button>
                                 </div>
 
-                                <div className="flex items-center justify-between gap-2 pt-1 border-t border-slate-200/70">
-                                  <div className="text-slate-600 truncate max-w-[130px]">
+                                <div className="flex items-center justify-between gap-2 pt-1 border-t border-slate-200 dark:border-slate-700/70">
+                                  <div className="text-slate-600 dark:text-slate-300 truncate max-w-[130px]">
                                     {item.candidate_name ? (
-                                      <span className="font-medium text-slate-800" title={item.candidate_name}>
+                                      <span className="font-medium text-slate-800 dark:text-slate-100" title={item.candidate_name}>
                                         👤 {item.candidate_name}
                                       </span>
                                     ) : (
-                                      <span className="text-slate-400 text-[10px]">قيد الفرز والترشيح</span>
+                                      <span className="text-slate-400 dark:text-slate-500 dark:text-slate-400 text-[10px]">قيد الفرز والترشيح</span>
                                     )}
                                   </div>
 
@@ -813,12 +813,12 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
                             title="تغيير حالة العقد الكلي وتحديث كافة المهن"
                             className={`appearance-none text-xs font-bold px-3 py-1.5 pl-7 pr-3 rounded-full border cursor-pointer transition-all shadow-2xs focus:ring-2 focus:ring-emerald-500 focus:outline-hidden ${statusStyle.bg} ${statusStyle.text} ${statusStyle.border}`}
                           >
-                            <option value="جديد" className="bg-white text-slate-800 font-medium">جديد</option>
-                            <option value="تم الاختيار" className="bg-white text-slate-800 font-medium">تم الاختيار</option>
-                            <option value="كشف طبي" className="bg-white text-slate-800 font-medium">كشف طبي</option>
-                            <option value="تم التفييز" className="bg-white text-slate-800 font-medium">تم التفييز</option>
-                            <option value="تم السفر" className="bg-white text-slate-800 font-medium">تم السفر</option>
-                            <option value="ملغي" className="bg-white text-slate-800 font-medium">ملغي</option>
+                            <option value="جديد" className="bg-white dark:bg-slate-900 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-medium">جديد</option>
+                            <option value="تم الاختيار" className="bg-white dark:bg-slate-900 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-medium">تم الاختيار</option>
+                            <option value="كشف طبي" className="bg-white dark:bg-slate-900 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-medium">كشف طبي</option>
+                            <option value="تم التفييز" className="bg-white dark:bg-slate-900 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-medium">تم التفييز</option>
+                            <option value="تم السفر" className="bg-white dark:bg-slate-900 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-medium">تم السفر</option>
+                            <option value="ملغي" className="bg-white dark:bg-slate-900 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-medium">ملغي</option>
                           </select>
                           <ChevronDown className="w-3.5 h-3.5 absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none opacity-60" />
                         </div>
@@ -826,8 +826,8 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
 
                       {/* Financials */}
                       <td className="p-3.5 font-mono">
-                        <div className="font-bold text-slate-900">{formatCurrency(order.total_cost, officeProfile.default_currency)}</div>
-                        <div className="text-[11px] text-slate-500">
+                        <div className="font-bold text-slate-900 dark:text-white">{formatCurrency(order.total_cost, officeProfile.default_currency)}</div>
+                        <div className="text-[11px] text-slate-500 dark:text-slate-400 dark:text-slate-500">
                           المتبقي: <span className="font-semibold text-rose-600">{formatCurrency(order.remaining_amount, officeProfile.default_currency)}</span>
                         </div>
                       </td>
@@ -840,7 +840,7 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
                             id={`btn-wa-order-${order.id}`}
                             onClick={() => handleSendWhatsApp(order)}
                             title="إرسال رسالة واتساب للطلب ككل"
-                            className="p-1.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 rounded-lg transition-colors cursor-pointer"
+                            className="p-1.5 bg-emerald-100 dark:bg-emerald-900/50 hover:bg-emerald-200 text-emerald-800 rounded-lg transition-colors cursor-pointer"
                           >
                             <Send className="w-4 h-4" />
                           </button>
@@ -850,7 +850,7 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
                             id={`btn-edit-order-${order.id}`}
                             onClick={() => handleEditOrder(order)}
                             title="تعديل بيانات الطلب والمهن"
-                            className="p-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 rounded-lg transition-colors cursor-pointer"
+                            className="p-1.5 bg-amber-50 dark:bg-amber-900/30 hover:bg-amber-100 dark:hover:bg-amber-900/50 text-amber-700 border border-amber-200 rounded-lg transition-colors cursor-pointer"
                           >
                             <Edit className="w-4 h-4" />
                           </button>
@@ -860,7 +860,7 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
                             id={`btn-view-order-${order.id}`}
                             onClick={() => handleViewOrder(order)}
                             title="عرض تفاصيل الطلب والعمالة"
-                            className="p-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors cursor-pointer"
+                            className="p-1.5 bg-slate-100 dark:bg-slate-800 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg transition-colors cursor-pointer"
                           >
                             <Eye className="w-4 h-4" />
                           </button>
@@ -870,7 +870,7 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
                             id={`btn-print-order-${order.id}`}
                             onClick={() => handlePrintOrder(order)}
                             title="طباعة إيصال وسند العقد"
-                            className="p-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors cursor-pointer"
+                            className="p-1.5 bg-slate-100 dark:bg-slate-800 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg transition-colors cursor-pointer"
                           >
                             <Printer className="w-4 h-4" />
                           </button>
@@ -888,15 +888,15 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
       {/* Visual Analytics & Charts Section (4 Required Charts) */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Chart 1: Orders by Month */}
-        <div id="chart-orders-monthly" className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+        <div id="chart-orders-monthly" className="bg-white dark:bg-slate-900 dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-emerald-600" />
-              <h4 className="font-bold text-xs sm:text-sm text-slate-900">
+              <h4 className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
                 1. عدد الطلبات خلال شهور السنة
               </h4>
             </div>
-            <span className="text-[11px] text-slate-400">توزيع زمني سنوي</span>
+            <span className="text-[11px] text-slate-400 dark:text-slate-500 dark:text-slate-400">توزيع زمني سنوي</span>
           </div>
           <div className="h-60 w-full" dir="ltr">
             <ResponsiveContainer width="100%" height="100%">
@@ -920,15 +920,15 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
         </div>
 
         {/* Chart 2: Orders by Sponsor Country */}
-        <div id="chart-orders-sponsor-country" className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+        <div id="chart-orders-sponsor-country" className="bg-white dark:bg-slate-900 dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <Globe2 className="w-4 h-4 text-blue-600" />
-              <h4 className="font-bold text-xs sm:text-sm text-slate-900">
+              <h4 className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
                 2. أعداد الطلبات بناءً على دولة الكفيل (المستقدم)
               </h4>
             </div>
-            <span className="text-[11px] text-slate-400">حسب مقرات العملاء</span>
+            <span className="text-[11px] text-slate-400 dark:text-slate-500 dark:text-slate-400">حسب مقرات العملاء</span>
           </div>
           <div className="h-60 w-full" dir="ltr">
             <ResponsiveContainer width="100%" height="100%">
@@ -950,15 +950,15 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
         </div>
 
         {/* Chart 3: Orders by Worker Country */}
-        <div id="chart-orders-worker-country" className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+        <div id="chart-orders-worker-country" className="bg-white dark:bg-slate-900 dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-purple-600" />
-              <h4 className="font-bold text-xs sm:text-sm text-slate-900">
+              <h4 className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
                 3. أعداد الطلبات بناءً على دولة العامل (بلدان الاستقدام)
               </h4>
             </div>
-            <span className="text-[11px] text-slate-400">أكثر الجنسيات طلباً</span>
+            <span className="text-[11px] text-slate-400 dark:text-slate-500 dark:text-slate-400">أكثر الجنسيات طلباً</span>
           </div>
           <div className="h-60 w-full" dir="ltr">
             <ResponsiveContainer width="100%" height="100%">
@@ -980,15 +980,15 @@ export const DashboardView: React.FC<DashboardViewProps> = (props) => {
         </div>
 
         {/* Chart 4: Orders by Profession */}
-        <div id="chart-orders-profession" className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+        <div id="chart-orders-profession" className="bg-white dark:bg-slate-900 dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <Briefcase className="w-4 h-4 text-amber-600" />
-              <h4 className="font-bold text-xs sm:text-sm text-slate-900">
+              <h4 className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
                 4. أعداد الطلبات وفقاً للمهن المطلوبة
               </h4>
             </div>
-            <span className="text-[11px] text-slate-400">توزيع الكوادر</span>
+            <span className="text-[11px] text-slate-400 dark:text-slate-500 dark:text-slate-400">توزيع الكوادر</span>
           </div>
           <div className="h-60 w-full" dir="ltr">
             <ResponsiveContainer width="100%" height="100%">

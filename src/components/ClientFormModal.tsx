@@ -144,9 +144,9 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-slate-950/70 backdrop-blur-xs" dir="rtl">
-      <div className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-2xl bg-white dark:bg-slate-900 dark:bg-slate-950 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 bg-slate-900 text-white border-b border-slate-800">
+        <div className="flex items-center justify-between px-6 py-4 bg-slate-900 dark:bg-slate-950 text-white border-b border-slate-800">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-emerald-500/20 text-emerald-400 rounded-xl">
               <Users className="w-5 h-5" />
@@ -163,7 +163,7 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors cursor-pointer"
+            className="p-2 text-slate-400 dark:text-slate-500 dark:text-slate-400 hover:text-white hover:bg-slate-800 dark:hover:bg-slate-800 dark:hover:bg-slate-800 rounded-lg transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -174,7 +174,7 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Name */}
             <div className="sm:col-span-2">
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">
                 اسم العميل (الكفيل) الكامل <span className="text-red-500">*</span>
               </label>
               <div className="relative">
@@ -183,8 +183,8 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
                   value={formData.name || ''}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="مثال: سيد القحطاني"
-                  className={`w-full px-3.5 py-2.5 bg-slate-50 border rounded-xl text-sm focus:outline-hidden focus:ring-2 transition-all ${
-                    errors.name ? 'border-red-500 ring-red-200' : 'border-slate-300 focus:border-emerald-500 focus:ring-emerald-200'
+                  className={`w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950/50 border rounded-xl text-sm focus:outline-hidden focus:ring-2 transition-all ${
+                    errors.name ? 'border-red-500 ring-red-200' : 'border-slate-300 dark:border-slate-600 focus:border-emerald-500 focus:ring-emerald-200'
                   }`}
                 />
               </div>
@@ -193,7 +193,7 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
 
             {/* National ID */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">
                 رقم الهوية الوطنية / الإقامة <span className="text-red-500">*</span>
               </label>
               <div className="relative">
@@ -202,8 +202,8 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
                   value={formData.national_id || ''}
                   onChange={(e) => setFormData({ ...formData, national_id: e.target.value })}
                   placeholder="مثال: 1084729183"
-                  className={`w-full px-3.5 py-2.5 bg-slate-50 border rounded-xl text-sm focus:outline-hidden focus:ring-2 transition-all ${
-                    errors.national_id ? 'border-red-500 ring-red-200' : 'border-slate-300 focus:border-emerald-500 focus:ring-emerald-200'
+                  className={`w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950/50 border rounded-xl text-sm focus:outline-hidden focus:ring-2 transition-all ${
+                    errors.national_id ? 'border-red-500 ring-red-200' : 'border-slate-300 dark:border-slate-600 focus:border-emerald-500 focus:ring-emerald-200'
                   }`}
                 />
               </div>
@@ -212,14 +212,14 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
 
             {/* Sponsor Country Selection */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">
                 دولة الكفيل <span className="text-red-500">*</span>
               </label>
               <select
                 value={formData.country_id || ''}
                 onChange={(e) => handleCountryChange(e.target.value)}
-                className={`w-full px-3.5 py-2.5 bg-slate-50 border rounded-xl text-sm focus:outline-hidden focus:ring-2 transition-all ${
-                  errors.country_id ? 'border-red-500 ring-red-200' : 'border-slate-300 focus:border-emerald-500 focus:ring-emerald-200'
+                className={`w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950/50 border rounded-xl text-sm focus:outline-hidden focus:ring-2 transition-all ${
+                  errors.country_id ? 'border-red-500 ring-red-200' : 'border-slate-300 dark:border-slate-600 focus:border-emerald-500 focus:ring-emerald-200'
                 }`}
               >
                 <option value="">اختر الدولة...</option>
@@ -234,11 +234,11 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
 
             {/* Mobile with Auto Dial Code */}
             <div className="sm:col-span-2">
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">
                 رقم الجوال <span className="text-red-500">*</span> (يضاف رمز الدولة تلقائياً)
               </label>
               <div className="flex items-center gap-2">
-                <div className="px-3.5 py-2.5 bg-slate-200/80 border border-slate-300 rounded-xl text-sm font-bold text-slate-700 select-none min-w-[75px] text-center" dir="ltr">
+                <div className="px-3.5 py-2.5 bg-slate-200 dark:bg-slate-700/80 border border-slate-300 dark:border-slate-600 rounded-xl text-sm font-bold text-slate-700 dark:text-slate-200 select-none min-w-[75px] text-center" dir="ltr">
                   {formData.phone_code || '+966'}
                 </div>
                 <input
@@ -246,8 +246,8 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
                   value={formData.mobile || ''}
                   onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
                   placeholder="501234567"
-                  className={`flex-1 px-3.5 py-2.5 bg-slate-50 border rounded-xl text-sm focus:outline-hidden focus:ring-2 transition-all ${
-                    errors.mobile ? 'border-red-500 ring-red-200' : 'border-slate-300 focus:border-emerald-500 focus:ring-emerald-200'
+                  className={`flex-1 px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950/50 border rounded-xl text-sm focus:outline-hidden focus:ring-2 transition-all ${
+                    errors.mobile ? 'border-red-500 ring-red-200' : 'border-slate-300 dark:border-slate-600 focus:border-emerald-500 focus:ring-emerald-200'
                   }`}
                   dir="ltr"
                 />
@@ -257,7 +257,7 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
 
             {/* City */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">
                 المدينة
               </label>
               <select
@@ -271,8 +271,8 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
                   });
                 }}
                 disabled={!formData.country_id}
-                className={`w-full px-3.5 py-2.5 bg-slate-50 border rounded-xl text-sm focus:outline-hidden focus:ring-2 transition-all ${
-                  errors.city_id ? 'border-red-500 ring-red-200' : 'border-slate-300 focus:border-emerald-500 focus:ring-emerald-200'
+                className={`w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950/50 border rounded-xl text-sm focus:outline-hidden focus:ring-2 transition-all ${
+                  errors.city_id ? 'border-red-500 ring-red-200' : 'border-slate-300 dark:border-slate-600 focus:border-emerald-500 focus:ring-emerald-200'
                 }`}
               >
                 <option value="">اختر المدينة...</option>
@@ -287,7 +287,7 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
 
             {/* Email */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">
                 البريد الإلكتروني (اختياري)
               </label>
               <input
@@ -295,14 +295,14 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
                 value={formData.email || ''}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 placeholder="example@mail.com"
-                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:outline-hidden focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all"
+                className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-600 rounded-xl text-sm focus:outline-hidden focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all"
                 dir="ltr"
               />
             </div>
 
             {/* Address */}
             <div className="sm:col-span-2">
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">
                 العنوان بالتفصيل
               </label>
               <input
@@ -310,13 +310,13 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
                 value={formData.address || ''}
                 onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                 placeholder="مثال: الرياض - حي الياسمين - شارع أنس بن مالك"
-                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:outline-hidden focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all"
+                className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-600 rounded-xl text-sm focus:outline-hidden focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all"
               />
             </div>
 
             {/* Notes */}
             <div className="sm:col-span-2">
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">
                 ملاحظات إضافية
               </label>
               <textarea
@@ -324,17 +324,17 @@ export const ClientFormModal: React.FC<ClientFormModalProps> = ({
                 onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                 rows={2}
                 placeholder="تفضيلات العميل، اشتراطات خاصة..."
-                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:outline-hidden focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all resize-none"
+                className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-600 rounded-xl text-sm focus:outline-hidden focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all resize-none"
               />
             </div>
           </div>
 
           {/* Footer Actions */}
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-700">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 text-xs font-bold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-xl transition-all cursor-pointer"
+              className="px-4 py-2.5 text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl transition-all cursor-pointer"
             >
               إلغاء
             </button>

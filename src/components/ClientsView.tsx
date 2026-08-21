@@ -247,13 +247,13 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
   return (
     <div id="clients-view-root" className="space-y-6 pb-12">
       {/* Header & Add Client Button */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-slate-900 dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs">
         <div>
-          <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
             <Users className="w-5 h-5 text-emerald-600" />
             <span>إدارة العملاء (الكفلاء وأصحاب العمل)</span>
           </h2>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 mt-1">
             سجل الكفلاء، متابعة طلبات كل عميل، إضافة طلبات مباشرة، وإدارة الأرشيف والتواصل المباشر
           </p>
         </div>
@@ -269,21 +269,21 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
       </div>
 
       {/* Tabs & Search Filter Bar */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+      <div className="bg-white dark:bg-slate-900 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs space-y-4">
         {/* Active vs Archived Tabs */}
-        <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
+        <div className="flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
           <button
             id="tab-active-clients"
             onClick={() => setActiveTab('active')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-colors ${
               activeTab === 'active'
-                ? 'bg-slate-900 text-white shadow-sm'
-                : 'text-slate-600 hover:bg-slate-100'
+                ? 'bg-slate-900 dark:bg-slate-950 text-white shadow-sm'
+                : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 dark:hover:bg-slate-800'
             }`}
           >
             <span>العملاء النشطون</span>
             <span className={`px-2 py-0.5 rounded-full text-[11px] font-mono ${
-              activeTab === 'active' ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-700'
+              activeTab === 'active' ? 'bg-emerald-600 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200'
             }`}>
               {activeClientsCount}
             </span>
@@ -294,14 +294,14 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
             onClick={() => setActiveTab('archived')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-colors ${
               activeTab === 'archived'
-                ? 'bg-slate-900 text-white shadow-sm'
-                : 'text-slate-600 hover:bg-slate-100'
+                ? 'bg-slate-900 dark:bg-slate-950 text-white shadow-sm'
+                : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 dark:hover:bg-slate-800'
             }`}
           >
             <Archive className="w-3.5 h-3.5" />
             <span>الأرشيف (غير النشطين)</span>
             <span className={`px-2 py-0.5 rounded-full text-[11px] font-mono ${
-              activeTab === 'archived' ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-700'
+              activeTab === 'archived' ? 'bg-emerald-600 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200'
             }`}>
               {archivedClientsCount}
             </span>
@@ -312,7 +312,7 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {/* Text Search */}
           <div className="relative">
-            <label className="block text-[11px] font-bold text-slate-600 mb-1">بحث بالاسم أو الجوال أو الهوية:</label>
+            <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1">بحث بالاسم أو الجوال أو الهوية:</label>
             <div className="relative">
               <input
                 id="clients-search-input"
@@ -320,15 +320,15 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="مثال: القحطاني، 05012..."
-                className="w-full pl-3 pr-8 py-2 text-xs rounded-xl border border-slate-300 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-hidden bg-slate-50"
+                className="w-full pl-3 pr-8 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-600 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-hidden bg-slate-50 dark:bg-slate-950/50"
               />
-              <Search className="w-3.5 h-3.5 absolute right-2.5 top-2.5 text-slate-400" />
+              <Search className="w-3.5 h-3.5 absolute right-2.5 top-2.5 text-slate-400 dark:text-slate-500 dark:text-slate-400" />
             </div>
           </div>
 
           {/* Country Filter */}
           <div className="w-48 relative">
-            <label className="block text-[11px] font-bold text-slate-600 mb-1">دولة الكفيل:</label>
+            <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1">دولة الكفيل:</label>
             <div className="relative">
               <CountryAutocomplete
                 countries={sponsorCountries}
@@ -343,7 +343,7 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
 
           {/* Profession Filter */}
           <div className="w-56 relative">
-            <label className="block text-[11px] font-bold text-slate-600 mb-1">المهن المطلوبة لطلبات العميل:</label>
+            <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1">المهن المطلوبة لطلبات العميل:</label>
             <div className="relative">
               <ProfessionAutocomplete
                 professions={professions}
@@ -360,10 +360,10 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
       {/* Clients Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredClients.length === 0 ? (
-          <div className="col-span-full bg-white rounded-2xl border border-slate-200 p-12 text-center text-slate-400">
+          <div className="col-span-full bg-white dark:bg-slate-900 dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-700 p-12 text-center text-slate-400 dark:text-slate-500 dark:text-slate-400">
             <Users className="w-12 h-12 mx-auto text-slate-300 stroke-1 mb-2" />
-            <p className="font-bold text-slate-700">لا يوجد عملاء مطابقون</p>
-            <p className="text-xs text-slate-500 mt-1">تأكد من شروط البحث أو التبديل بين النشط والمؤرشف</p>
+            <p className="font-bold text-slate-700 dark:text-slate-200">لا يوجد عملاء مطابقون</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 mt-1">تأكد من شروط البحث أو التبديل بين النشط والمؤرشف</p>
           </div>
         ) : (
           filteredClients.map(client => {
@@ -372,19 +372,19 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
               <div
                 key={client.id}
                 id={`client-card-${client.id}`}
-                className="bg-white rounded-2xl border border-slate-200 shadow-xs hover:border-emerald-300 transition-all p-5 flex flex-col justify-between"
+                className="bg-white dark:bg-slate-900 dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs hover:border-emerald-300 transition-all p-5 flex flex-col justify-between"
               >
                 <div>
                   {/* Top Bar: Name & Actions */}
                   <div className="flex items-start justify-between gap-2 mb-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-11 h-11 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-base">
+                      <div className="w-11 h-11 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 flex items-center justify-center font-bold text-base">
                         {client.name.charAt(0)}
                       </div>
                       <div>
-                        <h3 className="font-bold text-sm text-slate-900">{client.name}</h3>
-                        <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-0.5">
-                          <MapPin className="w-3.5 h-3.5 text-slate-400" />
+                        <h3 className="font-bold text-sm text-slate-900 dark:text-white">{client.name}</h3>
+                        <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 mt-0.5">
+                          <MapPin className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 dark:text-slate-400" />
                           <span>{client.country_name} • {client.city_name}</span>
                         </div>
                       </div>
@@ -394,14 +394,14 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
                       <button
                         onClick={() => openEditClientModal(client)}
                         title="تعديل بيانات العميل"
-                        className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                        className="p-1.5 text-slate-400 dark:text-slate-500 dark:text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors"
                       >
                         <Edit3 className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => onToggleArchiveClient(client.id)}
                         title={client.is_archived ? 'استعادة من الأرشيف' : 'نقل إلى الأرشيف'}
-                        className="p-1.5 text-slate-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors"
+                        className="p-1.5 text-slate-400 dark:text-slate-500 dark:text-slate-400 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/30 rounded-lg transition-colors"
                       >
                         {client.is_archived ? <RotateCcw className="w-4 h-4" /> : <Archive className="w-4 h-4" />}
                       </button>
@@ -409,19 +409,19 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
                   </div>
 
                   {/* Client Info Strip */}
-                  <div className="space-y-1.5 text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100 mb-3">
+                  <div className="space-y-1.5 text-xs text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-950/50 p-3 rounded-xl border border-slate-100 dark:border-slate-800 mb-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-slate-500">الجوال:</span>
-                      <span className="font-mono font-bold text-slate-900 dir-ltr">{client.full_mobile || `${client.phone_code} ${client.mobile}`}</span>
+                      <span className="text-slate-500 dark:text-slate-400 dark:text-slate-500">الجوال:</span>
+                      <span className="font-mono font-bold text-slate-900 dark:text-white dir-ltr">{client.full_mobile || `${client.phone_code} ${client.mobile}`}</span>
                     </div>
                     {client.national_id && (
                       <div className="flex items-center justify-between">
-                        <span className="text-slate-500">الهوية / الإقامة:</span>
-                        <span className="font-mono text-slate-700">{client.national_id}</span>
+                        <span className="text-slate-500 dark:text-slate-400 dark:text-slate-500">الهوية / الإقامة:</span>
+                        <span className="font-mono text-slate-700 dark:text-slate-200">{client.national_id}</span>
                       </div>
                     )}
                     {client.address && (
-                      <div className="text-[11px] text-slate-500 truncate" title={client.address}>
+                      <div className="text-[11px] text-slate-500 dark:text-slate-400 dark:text-slate-500 truncate" title={client.address}>
                         العنوان: {client.address}
                       </div>
                     )}
@@ -431,7 +431,7 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
                   <div className="mb-4">
                     <button
                       onClick={() => setSelectedClientForDetails(client)}
-                      className="w-full flex items-center justify-between p-2.5 rounded-xl bg-emerald-50/70 hover:bg-emerald-100/80 text-emerald-900 transition-colors text-xs font-bold border border-emerald-200/60"
+                      className="w-full flex items-center justify-between p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-900/30/70 hover:bg-emerald-100 dark:hover:bg-emerald-900/80 text-emerald-900 transition-colors text-xs font-bold border border-emerald-200/60"
                     >
                       <div className="flex items-center gap-2">
                         <FileText className="w-4 h-4 text-emerald-700" />
@@ -445,11 +445,11 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
                 </div>
 
                 {/* Bottom Actions Bar */}
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+                <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
                   <button
                     id={`btn-wa-client-${client.id}`}
                     onClick={() => handleSendWelcomeWhatsApp(client)}
-                    className="flex items-center gap-1 text-emerald-700 hover:text-emerald-800 text-xs font-bold bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-xl transition-colors"
+                    className="flex items-center gap-1 text-emerald-700 hover:text-emerald-800 text-xs font-bold bg-emerald-50 dark:bg-emerald-900/30 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 px-3 py-1.5 rounded-xl transition-colors"
                   >
                     <Send className="w-3.5 h-3.5" />
                     <span>مراسلة واتساب</span>
@@ -458,7 +458,7 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
                   <button
                     id={`btn-add-order-for-client-${client.id}`}
                     onClick={() => onCreateOrderForClient(client)}
-                    className="flex items-center gap-1 text-white bg-slate-900 hover:bg-slate-800 text-xs font-bold px-3 py-1.5 rounded-xl transition-colors shadow-xs"
+                    className="flex items-center gap-1 text-white bg-slate-900 dark:bg-slate-950 hover:bg-slate-800 dark:hover:bg-slate-800 dark:hover:bg-slate-800 text-xs font-bold px-3 py-1.5 rounded-xl transition-colors shadow-xs"
                   >
                     <PlusCircle className="w-3.5 h-3.5 text-emerald-400" />
                     <span>+ طلب استقدام</span>
@@ -476,15 +476,15 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
           id="client-history-modal"
           className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4"
         >
-          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-slate-200 text-slate-800">
-            <div className="bg-slate-900 text-white p-5 flex items-center justify-between sticky top-0 z-10">
+          <div className="bg-white dark:bg-slate-900 dark:bg-slate-950 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100">
+            <div className="bg-slate-900 dark:bg-slate-950 text-white p-5 flex items-center justify-between sticky top-0 z-10">
               <div className="flex items-center gap-2">
                 <Users className="w-5 h-5 text-emerald-400" />
                 <h3 className="font-bold text-sm">سجل وطلبات العميل: {selectedClientForDetails.name}</h3>
               </div>
               <button
                 onClick={() => setSelectedClientForDetails(null)}
-                className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800"
+                className="p-1.5 text-slate-400 dark:text-slate-500 dark:text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 dark:hover:bg-slate-800 dark:hover:bg-slate-800"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -492,11 +492,11 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
 
             <div className="p-6 space-y-5 text-xs">
               {/* Client Info Banner */}
-              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-wrap items-center justify-between gap-3">
+              <div className="bg-slate-50 dark:bg-slate-950/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <div className="font-bold text-slate-900 text-sm">{selectedClientForDetails.name}</div>
-                  <div className="text-slate-500 font-mono dir-ltr text-right mt-0.5">{selectedClientForDetails.full_mobile || selectedClientForDetails.mobile}</div>
-                  <div className="text-slate-500 text-[11px] mt-0.5">{selectedClientForDetails.country_name} - {selectedClientForDetails.city_name}</div>
+                  <div className="font-bold text-slate-900 dark:text-white text-sm">{selectedClientForDetails.name}</div>
+                  <div className="text-slate-500 dark:text-slate-400 dark:text-slate-500 font-mono dir-ltr text-right mt-0.5">{selectedClientForDetails.full_mobile || selectedClientForDetails.mobile}</div>
+                  <div className="text-slate-500 dark:text-slate-400 dark:text-slate-500 text-[11px] mt-0.5">{selectedClientForDetails.country_name} - {selectedClientForDetails.city_name}</div>
                 </div>
                 <button
                   onClick={() => {
@@ -513,12 +513,12 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
 
               {/* Client's Orders List */}
               <div>
-                <h4 className="font-bold text-sm text-slate-900 mb-3">
+                <h4 className="font-bold text-sm text-slate-900 dark:text-white mb-3">
                   جميع طلبات الاستقدام لهذا العميل ({orders.filter(o => o.client_id === selectedClientForDetails.id).length})
                 </h4>
 
                 {orders.filter(o => o.client_id === selectedClientForDetails.id).length === 0 ? (
-                  <div className="p-8 text-center bg-slate-50 rounded-xl border border-slate-200 text-slate-500">
+                  <div className="p-8 text-center bg-slate-50 dark:bg-slate-950/50 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 dark:text-slate-500">
                     لا توجد طلبات مسجلة لهذا العميل حتى الآن.
                   </div>
                 ) : (
@@ -526,14 +526,14 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
                     {orders
                       .filter(o => o.client_id === selectedClientForDetails.id)
                       .map(order => (
-                        <div key={order.id} className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs space-y-2">
+                        <div key={order.id} className="bg-white dark:bg-slate-900 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-xs space-y-2">
                           <div className="flex items-center justify-between">
-                            <div className="font-bold font-mono text-slate-900 text-xs flex items-center gap-2">
+                            <div className="font-bold font-mono text-slate-900 dark:text-white text-xs flex items-center gap-2">
                               <span>{order.order_number}</span>
-                              <span className="text-slate-400 font-normal">•</span>
-                              <span className="text-slate-500 font-normal">{formatDate(order.contract_date)}</span>
+                              <span className="text-slate-400 dark:text-slate-500 dark:text-slate-400 font-normal">•</span>
+                              <span className="text-slate-500 dark:text-slate-400 dark:text-slate-500 font-normal">{formatDate(order.contract_date)}</span>
                             </div>
-                            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">
+                            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800">
                               {order.status}
                             </span>
                           </div>
@@ -541,20 +541,20 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
                           {/* Items */}
                           <div className="space-y-1">
                             {order.items.map((it, idx) => (
-                              <div key={it.id || idx} className="text-[11px] bg-slate-50 p-2 rounded-lg flex items-center justify-between">
+                              <div key={it.id || idx} className="text-[11px] bg-slate-50 dark:bg-slate-950/50 p-2 rounded-lg flex items-center justify-between">
                                 <div>
-                                  <strong className="text-slate-900">{it.profession_name}</strong>
-                                  <span className="text-slate-400 mx-1">من</span>
+                                  <strong className="text-slate-900 dark:text-white">{it.profession_name}</strong>
+                                  <span className="text-slate-400 dark:text-slate-500 dark:text-slate-400 mx-1">من</span>
                                   <span className="text-emerald-700 font-semibold">{it.worker_country_name}</span>
                                 </div>
-                                <span className="text-slate-500">{it.status}</span>
+                                <span className="text-slate-500 dark:text-slate-400 dark:text-slate-500">{it.status}</span>
                               </div>
                             ))}
                           </div>
 
                           {/* Bottom Row */}
-                          <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
-                            <span className="font-mono text-slate-600">
+                          <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px]">
+                            <span className="font-mono text-slate-600 dark:text-slate-300">
                               التكلفة: <strong>{formatCurrency(order.total_cost, officeProfile.default_currency)}</strong>
                             </span>
                             <button
@@ -584,8 +584,8 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
           id="client-form-modal"
           className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4"
         >
-          <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto border border-slate-200 text-slate-800">
-            <div className="bg-slate-900 text-white p-5 flex items-center justify-between sticky top-0 z-10">
+          <div className="bg-white dark:bg-slate-900 dark:bg-slate-950 rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100">
+            <div className="bg-slate-900 dark:bg-slate-950 text-white p-5 flex items-center justify-between sticky top-0 z-10">
               <div className="flex items-center gap-2">
                 <Users className="w-5 h-5 text-emerald-400" />
                 <h3 className="font-bold text-sm">
@@ -594,7 +594,7 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
               </div>
               <button
                 onClick={() => setIsFormOpen(false)}
-                className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800"
+                className="p-1.5 text-slate-400 dark:text-slate-500 dark:text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 dark:hover:bg-slate-800 dark:hover:bg-slate-800"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -603,32 +603,32 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
             <form onSubmit={handleSubmitClientForm} className="p-6 space-y-4 text-xs">
               {/* Client Full Name */}
               <div>
-                <label className="block text-[11px] font-bold text-slate-700 mb-1">اسم العميل (الكفيل):</label>
+                <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 mb-1">اسم العميل (الكفيل):</label>
                 <input
                   type="text"
                   value={formData.name || ''}
                   onChange={(e) => setFormData(p => ({ ...p, name: e.target.value }))}
                   placeholder="الاسم الثلاثي أو الرباعي..."
-                  className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-950/50 focus:bg-white dark:focus:bg-slate-950"
                   required
                 />
               </div>
 
               {/* National ID / Iqama */}
               <div>
-                <label className="block text-[11px] font-bold text-slate-700 mb-1">رقم الهوية الوطنية / السجل المدني / الإقامة:</label>
+                <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 mb-1">رقم الهوية الوطنية / السجل المدني / الإقامة:</label>
                 <input
                   type="text"
                   value={formData.national_id || ''}
                   onChange={(e) => setFormData(p => ({ ...p, national_id: e.target.value }))}
                   placeholder="مثال: 1084729183"
-                  className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white font-mono"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-950/50 focus:bg-white dark:focus:bg-slate-950 font-mono"
                 />
               </div>
 
               {/* Sponsor Country Selection (Shows ONLY Sponsor Countries!) */}
               <div>
-                <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 mb-1">
                   دولة العميل (تظهر دول الكفلاء فقط):
                 </label>
                 <div className="relative">
@@ -640,16 +640,16 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
                     placeholder="ابحث عن دولة..."
                   />
                 </div>
-                <p className="text-[10px] text-slate-500 mt-1">
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 dark:text-slate-500 mt-1">
                   * عند اختيار الدولة يتم تحديث كود الاتصال الدولي وتصفية قائمة المدن تلقائياً.
                 </p>
               </div>
 
               {/* Phone Code + Mobile Phone Input */}
               <div>
-                <label className="block text-[11px] font-bold text-slate-700 mb-1">رقم الموبايل:</label>
+                <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 mb-1">رقم الموبايل:</label>
                 <div className="flex items-center gap-2" dir="ltr">
-                  <div className="px-3 py-2 rounded-xl bg-slate-200 text-slate-800 font-mono font-bold text-xs shrink-0">
+                  <div className="px-3 py-2 rounded-xl bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-100 font-mono font-bold text-xs shrink-0">
                     {formData.phone_code || '+966'}
                   </div>
                   <input
@@ -657,7 +657,7 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
                     value={formData.mobile || ''}
                     onChange={(e) => setFormData(p => ({ ...p, mobile: e.target.value }))}
                     placeholder="501234567"
-                    className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white font-mono text-xs"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-950/50 focus:bg-white dark:focus:bg-slate-950 font-mono text-xs"
                     required
                   />
                 </div>
@@ -665,13 +665,13 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
 
               {/* City Selection (Filtered for this sponsor country!) */}
               <div>
-                <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 mb-1">
                   المدينة (مصفاة بحسب دولة الكفيل):
                 </label>
                 <select
                   value={formData.city_id || ''}
                   onChange={(e) => handleCityChangeInForm(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-950/50 focus:bg-white dark:focus:bg-slate-950"
                 >
                   <option value="">اختر المدينة...</option>
                   {availableCitiesInForm.length === 0 ? (
@@ -686,46 +686,46 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
 
               {/* Address */}
               <div>
-                <label className="block text-[11px] font-bold text-slate-700 mb-1">العنوان التفصيلي / الحي:</label>
+                <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 mb-1">العنوان التفصيلي / الحي:</label>
                 <input
                   type="text"
                   value={formData.address || ''}
                   onChange={(e) => setFormData(p => ({ ...p, address: e.target.value }))}
                   placeholder="مثال: حي الياسمين، شارع أنس بن مالك"
-                  className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-950/50 focus:bg-white dark:focus:bg-slate-950"
                 />
               </div>
 
               {/* Email */}
               <div>
-                <label className="block text-[11px] font-bold text-slate-700 mb-1">البريد الإلكتروني (اختياري):</label>
+                <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 mb-1">البريد الإلكتروني (اختياري):</label>
                 <input
                   type="email"
                   value={formData.email || ''}
                   onChange={(e) => setFormData(p => ({ ...p, email: e.target.value }))}
                   placeholder="client@example.com"
-                  className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-950/50 focus:bg-white dark:focus:bg-slate-950"
                 />
               </div>
 
               {/* Notes */}
               <div>
-                <label className="block text-[11px] font-bold text-slate-700 mb-1">ملاحظات على العميل:</label>
+                <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 mb-1">ملاحظات على العميل:</label>
                 <textarea
                   value={formData.notes || ''}
                   onChange={(e) => setFormData(p => ({ ...p, notes: e.target.value }))}
                   placeholder="تفضيلات، متطلبات خاصة..."
                   rows={2}
-                  className="w-full p-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white"
+                  className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-950/50 focus:bg-white dark:focus:bg-slate-950"
                 />
               </div>
 
               {/* Form Action Buttons */}
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-200">
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-200 dark:border-slate-700">
                 <button
                   type="button"
                   onClick={() => setIsFormOpen(false)}
-                  className="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition-colors"
+                  className="px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold transition-colors"
                 >
                   إلغاء
                 </button>

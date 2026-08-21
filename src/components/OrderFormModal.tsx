@@ -292,9 +292,9 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-slate-950/70 backdrop-blur-xs" dir="rtl">
-      <div className="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-4xl bg-white dark:bg-slate-900 dark:bg-slate-950 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 bg-slate-900 text-white border-b border-slate-800">
+        <div className="flex items-center justify-between px-6 py-4 bg-slate-900 dark:bg-slate-950 text-white border-b border-slate-800">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-emerald-500/20 text-emerald-400 rounded-xl">
               <FileText className="w-5 h-5" />
@@ -311,7 +311,7 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors cursor-pointer"
+            className="p-2 text-slate-400 dark:text-slate-500 dark:text-slate-400 hover:text-white hover:bg-slate-800 dark:hover:bg-slate-800 dark:hover:bg-slate-800 rounded-lg transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -320,16 +320,16 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="p-5 sm:p-6 space-y-6 max-h-[82vh] overflow-y-auto">
           {/* Section 1: Client Selection & Contract Numbers */}
-          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-4">
+          <div className="bg-slate-50 dark:bg-slate-950/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700 space-y-4">
             <div className="flex items-center justify-between">
-              <h4 className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+              <h4 className="text-xs font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
                 <Users className="w-4 h-4 text-emerald-600" />
                 <span>بيانات العميل (الكفيل) والعقد</span>
               </h4>
               <button
                 type="button"
                 onClick={onOpenNewClientModal}
-                className="text-xs font-bold text-emerald-600 hover:text-emerald-700 bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-lg border border-emerald-200 transition-colors flex items-center gap-1 cursor-pointer"
+                className="text-xs font-bold text-emerald-600 hover:text-emerald-700 bg-emerald-50 dark:bg-emerald-900/30 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 px-3 py-1.5 rounded-lg border border-emerald-200 transition-colors flex items-center gap-1 cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>+ عميل جديد من هنا</span>
@@ -339,7 +339,7 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
               {/* Client Selection */}
               <div className="sm:col-span-2 relative">
-                <label className="block text-xs font-bold text-slate-700 mb-1">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">
                   اختر العميل (الكفيل) <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
@@ -355,25 +355,25 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
 
               {/* Order Number */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">
                   رقم الطلب <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   value={formData.order_number || ''}
                   onChange={(e) => setFormData({ ...formData, order_number: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-sm font-mono focus:outline-hidden focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all text-center"
+                  className="w-full px-3.5 py-2.5 bg-white dark:bg-slate-900 dark:bg-slate-950 border border-slate-300 dark:border-slate-600 rounded-xl text-sm font-mono focus:outline-hidden focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all text-center"
                 />
               </div>
             </div>
 
             {/* Selected Client Info Card Preview */}
             {formData.client_id && (
-              <div className="flex flex-wrap items-center justify-between gap-2 p-2.5 bg-emerald-50/70 border border-emerald-200/80 rounded-xl text-xs">
+              <div className="flex flex-wrap items-center justify-between gap-2 p-2.5 bg-emerald-50 dark:bg-emerald-900/30/70 border border-emerald-200/80 rounded-xl text-xs">
                 <div className="flex items-center gap-2">
                   <UserCheck className="w-4 h-4 text-emerald-600" />
-                  <span className="font-bold text-slate-800">العميل المعتمد: {formData.client_name}</span>
-                  <span className="text-slate-500">({formData.sponsor_country_name} - {formData.city_name})</span>
+                  <span className="font-bold text-slate-800 dark:text-slate-100">العميل المعتمد: {formData.client_name}</span>
+                  <span className="text-slate-500 dark:text-slate-400 dark:text-slate-500">({formData.sponsor_country_name} - {formData.city_name})</span>
                 </div>
                 <span className="font-mono font-bold text-emerald-700" dir="ltr">{formData.client_mobile}</span>
               </div>
@@ -384,18 +384,18 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <div>
-                <h4 className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <h4 className="text-xs font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
                   <Briefcase className="w-4 h-4 text-emerald-600" />
                   <span>المهن والعمالة المطلوبة في هذا الطلب ({formData.items?.length || 0})</span>
                 </h4>
-                <p className="text-[11px] text-slate-500">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 dark:text-slate-500">
                   يمكنك إضافة أكثر من مهنة (مثل: سائق من الهند + طباخ من السودان) تحت نفس الطلب
                 </p>
               </div>
               <button
                 type="button"
                 onClick={handleAddItem}
-                className="flex items-center gap-1 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-bold transition-all shadow-xs cursor-pointer"
+                className="flex items-center gap-1 px-3 py-1.5 bg-slate-800 dark:bg-slate-800 dark:bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-bold transition-all shadow-xs cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5 text-emerald-400" />
                 <span>+ إضافة مهنة أخرى</span>
@@ -405,10 +405,10 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
             {/* Items Cards */}
             <div className="space-y-3">
               {(formData.items || []).map((item, idx) => (
-                <div key={item.id} className="p-4 bg-slate-50/80 rounded-xl border border-slate-200 relative group transition-all hover:border-slate-300">
-                  <div className="flex items-center justify-between pb-2 mb-3 border-b border-slate-200">
-                    <span className="text-xs font-black text-slate-700 flex items-center gap-1.5">
-                      <span className="w-5 h-5 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center text-[11px] font-bold">
+                <div key={item.id} className="p-4 bg-slate-50 dark:bg-slate-900 dark:bg-slate-950/80 rounded-xl border border-slate-200 dark:border-slate-700 relative group transition-all hover:border-slate-300 dark:hover:border-slate-600">
+                  <div className="flex items-center justify-between pb-2 mb-3 border-b border-slate-200 dark:border-slate-700">
+                    <span className="text-xs font-black text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
+                      <span className="w-5 h-5 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center text-[11px] font-bold">
                         {idx + 1}
                       </span>
                       <span>المهنة رقم #{idx + 1}: {item.profession_name || 'مهنة'}</span>
@@ -428,7 +428,7 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                     {/* Profession with Autocomplete */}
                     <div className="relative">
-                      <label className="block text-[11px] font-bold text-slate-600 mb-1">
+                      <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1">
                         المهنة <span className="text-emerald-600 font-normal">(إكمال تلقائي)</span>
                       </label>
                       <ProfessionAutocomplete
@@ -442,7 +442,7 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
 
                     {/* Worker Country with Autocomplete */}
                     <div className="relative">
-                      <label className="block text-[11px] font-bold text-slate-600 mb-1">
+                      <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1">
                         دولة الاستقدام <span className="text-emerald-600 font-normal">(إكمال تلقائي)</span>
                       </label>
                       <CountryAutocomplete
@@ -457,21 +457,21 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
 
                     {/* Age Range */}
                     <div>
-                      <label className="block text-[11px] font-bold text-slate-600 mb-1">العمر (من - إلى)</label>
+                      <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1">العمر (من - إلى)</label>
                       <div className="flex items-center gap-1.5">
                         <input
                           type="number"
                           value={item.age_min || 25}
                           onChange={(e) => handleUpdateItemField(item.id, 'age_min', Number(e.target.value))}
-                          className="w-full px-2 py-1.5 bg-white border border-slate-300 rounded-lg text-xs text-center"
+                          className="w-full px-2 py-1.5 bg-white dark:bg-slate-900 dark:bg-slate-950 border border-slate-300 dark:border-slate-600 rounded-lg text-xs text-center"
                           placeholder="من"
                         />
-                        <span className="text-slate-400 text-xs">-</span>
+                        <span className="text-slate-400 dark:text-slate-500 dark:text-slate-400 text-xs">-</span>
                         <input
                           type="number"
                           value={item.age_max || 40}
                           onChange={(e) => handleUpdateItemField(item.id, 'age_max', Number(e.target.value))}
-                          className="w-full px-2 py-1.5 bg-white border border-slate-300 rounded-lg text-xs text-center"
+                          className="w-full px-2 py-1.5 bg-white dark:bg-slate-900 dark:bg-slate-950 border border-slate-300 dark:border-slate-600 rounded-lg text-xs text-center"
                           placeholder="إلى"
                         />
                       </div>
@@ -479,22 +479,22 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
 
                     {/* Cost */}
                     <div>
-                      <label className="block text-[11px] font-bold text-slate-600 mb-1">تكلفة الاستقدام (ريال)</label>
+                      <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1">تكلفة الاستقدام (ريال)</label>
                       <input
                         type="number"
                         value={item.recruitment_cost || 0}
                         onChange={(e) => handleItemCostChange(item.id, Number(e.target.value))}
-                        className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs font-bold text-slate-800 focus:outline-hidden focus:border-emerald-500 text-center"
+                        className="w-full px-3 py-2 bg-white dark:bg-slate-900 dark:bg-slate-950 border border-slate-300 dark:border-slate-600 rounded-lg text-xs font-bold text-slate-800 dark:text-slate-100 focus:outline-hidden focus:border-emerald-500 text-center"
                       />
                     </div>
 
                     {/* Experience Type */}
                     <div className="sm:col-span-2">
-                      <label className="block text-[11px] font-bold text-slate-600 mb-1">نوع الخبرة</label>
+                      <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1">نوع الخبرة</label>
                       <select
                         value={item.experience_type || ''}
                         onChange={(e) => handleUpdateItemField(item.id, 'experience_type', e.target.value)}
-                        className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs focus:outline-hidden focus:border-emerald-500"
+                        className="w-full px-3 py-2 bg-white dark:bg-slate-900 dark:bg-slate-950 border border-slate-300 dark:border-slate-600 rounded-lg text-xs focus:outline-hidden focus:border-emerald-500"
                       >
                         <option value="">الخبرة...</option>
                         <option value="جديد (بدون خبرة)">جديد (بدون خبرة)</option>
@@ -506,23 +506,23 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
 
                     {/* Candidate Name (if chosen) */}
                     <div>
-                      <label className="block text-[11px] font-bold text-slate-600 mb-1">اسم المرشح (إن وجد)</label>
+                      <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1">اسم المرشح (إن وجد)</label>
                       <input
                         type="text"
                         value={item.candidate_name || ''}
                         onChange={(e) => handleUpdateItemField(item.id, 'candidate_name', e.target.value)}
                         placeholder="اسم العامل/العاملة"
-                        className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs focus:outline-hidden focus:border-emerald-500"
+                        className="w-full px-3 py-2 bg-white dark:bg-slate-900 dark:bg-slate-950 border border-slate-300 dark:border-slate-600 rounded-lg text-xs focus:outline-hidden focus:border-emerald-500"
                       />
                     </div>
 
                     {/* Item Status */}
                     <div>
-                      <label className="block text-[11px] font-bold text-slate-600 mb-1">حالة المهنة</label>
+                      <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1">حالة المهنة</label>
                       <select
                         value={item.status || 'جديد'}
                         onChange={(e) => handleUpdateItemField(item.id, 'status', e.target.value)}
-                        className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs focus:outline-hidden focus:border-emerald-500"
+                        className="w-full px-3 py-2 bg-white dark:bg-slate-900 dark:bg-slate-950 border border-slate-300 dark:border-slate-600 rounded-lg text-xs focus:outline-hidden focus:border-emerald-500"
                       >
                         {ORDER_STATUSES.map(st => (
                           <option key={st} value={st}>{st}</option>
@@ -536,8 +536,8 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
           </div>
 
           {/* Section 3: Financials & Status */}
-          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-4">
-            <h4 className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+          <div className="bg-slate-50 dark:bg-slate-950/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700 space-y-4">
+            <h4 className="text-xs font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
               <Coins className="w-4 h-4 text-emerald-600" />
               <span>البيانات المالية ومرحلة العقد</span>
             </h4>
@@ -545,38 +545,38 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {/* Total Cost */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">إجمالي التكلفة</label>
-                <div className="p-2.5 bg-white border border-slate-300 rounded-xl text-center font-bold text-base text-slate-800">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">إجمالي التكلفة</label>
+                <div className="p-2.5 bg-white dark:bg-slate-900 dark:bg-slate-950 border border-slate-300 dark:border-slate-600 rounded-xl text-center font-bold text-base text-slate-800 dark:text-slate-100">
                   {formatCurrency(formData.total_cost || 0)}
                 </div>
               </div>
 
               {/* Paid Amount */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">المبلغ المدفوع (المقدم)</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">المبلغ المدفوع (المقدم)</label>
                 <input
                   type="number"
                   value={formData.paid_amount || 0}
                   onChange={(e) => handlePaidAmountChange(Number(e.target.value))}
-                  className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-sm font-bold text-emerald-600 text-center focus:outline-hidden focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all"
+                  className="w-full px-3.5 py-2.5 bg-white dark:bg-slate-900 dark:bg-slate-950 border border-slate-300 dark:border-slate-600 rounded-xl text-sm font-bold text-emerald-600 text-center focus:outline-hidden focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all"
                 />
               </div>
 
               {/* Remaining Amount */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">المبلغ المتبقي</label>
-                <div className="p-2.5 bg-white border border-slate-300 rounded-xl text-center font-bold text-base text-amber-600">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">المبلغ المتبقي</label>
+                <div className="p-2.5 bg-white dark:bg-slate-900 dark:bg-slate-950 border border-slate-300 dark:border-slate-600 rounded-xl text-center font-bold text-base text-amber-600">
                   {formatCurrency(formData.remaining_amount || 0)}
                 </div>
               </div>
 
               {/* Overall Status */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">حالة الطلب العامة</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">حالة الطلب العامة</label>
                 <select
                   value={formData.status || 'جديد'}
                   onChange={(e) => setFormData({ ...formData, status: e.target.value as OrderStatus })}
-                  className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-sm focus:outline-hidden focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
+                  className="w-full px-3.5 py-2.5 bg-white dark:bg-slate-900 dark:bg-slate-950 border border-slate-300 dark:border-slate-600 rounded-xl text-sm focus:outline-hidden focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
                 >
                   {ORDER_STATUSES.map(st => (
                     <option key={st} value={st}>{st}</option>
@@ -586,11 +586,11 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
 
               {/* Payment Method */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">طريقة السداد</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">طريقة السداد</label>
                 <select
                   value={formData.payment_method || 'تحويل بنكي'}
                   onChange={(e) => setFormData({ ...formData, payment_method: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-sm focus:outline-hidden focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
+                  className="w-full px-3.5 py-2.5 bg-white dark:bg-slate-900 dark:bg-slate-950 border border-slate-300 dark:border-slate-600 rounded-xl text-sm focus:outline-hidden focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
                 >
                   <option value="تحويل بنكي">تحويل بنكي</option>
                   <option value="نقداً (كاش)">نقداً (كاش)</option>
@@ -601,35 +601,35 @@ export const OrderFormModal: React.FC<OrderFormModalProps> = ({
 
               {/* Contract Date */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">تاريخ العقد</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">تاريخ العقد</label>
                 <input
                   type="date"
                   value={formData.contract_date || ''}
                   onChange={(e) => setFormData({ ...formData, contract_date: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-sm focus:outline-hidden focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
+                  className="w-full px-3.5 py-2.5 bg-white dark:bg-slate-900 dark:bg-slate-950 border border-slate-300 dark:border-slate-600 rounded-xl text-sm focus:outline-hidden focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
                 />
               </div>
 
               {/* General Notes */}
               <div className="sm:col-span-3">
-                <label className="block text-xs font-bold text-slate-700 mb-1">ملاحظات الطلب</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">ملاحظات الطلب</label>
                 <textarea
                   value={formData.notes || ''}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                   rows={2}
                   placeholder="أي ملاحظات أو اتفاقات خاصة في هذا العقد..."
-                  className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-sm focus:outline-hidden focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 resize-none"
+                  className="w-full px-3.5 py-2.5 bg-white dark:bg-slate-900 dark:bg-slate-950 border border-slate-300 dark:border-slate-600 rounded-xl text-sm focus:outline-hidden focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 resize-none"
                 />
               </div>
             </div>
           </div>
 
           {/* Footer Actions */}
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-700">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 text-xs font-bold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-xl transition-all cursor-pointer"
+              className="px-4 py-2.5 text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl transition-all cursor-pointer"
             >
               إلغاء
             </button>
